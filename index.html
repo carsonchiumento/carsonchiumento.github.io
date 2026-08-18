@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  HOW TO EDIT THIS FILE
+  ============================================================
+  Everything you need to change is marked with  <!-- EDIT -->
+  Change text between tags. Don't touch anything inside <style>
+  unless you want to change colors/fonts.
+
+  TO ADD A PROJECT: copy one whole <article class="sheet">...</article>
+  block and paste it below the last one, then edit the text.
+
+  TO ADD IMAGES: make a folder in your repo called "img", upload
+  your photo/render there, then replace the <div class="ph">...</div>
+  with:   <img src="img/yourfile.jpg" alt="Short description">
+
+  TO ADD YOUR RESUME: upload it to the repo root as resume.pdf
+  (named exactly that, overwrite it each time you update).
+  ============================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- EDIT: your name + one-line description. This shows in Google results. -->
+<title>Carson Chiumento — Mechanical Engineer</title>
+<meta name="description" content="Mechanical engineering portfolio of Carson Chiumento. Design, analysis, and manufacturing projects.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#EDEEEF;
+  --ink:#14171A;
+  --graphite:#5B646C;
+  --rule:#C6CBCF;
+  --accent:#0E7C93;
+  --sheet:#F7F8F8;
+  --pad:clamp(1.25rem,4vw,3.5rem);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Archivo',system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad)}
+a{color:inherit}
+
+/* ---------- utility type ---------- */
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.eyebrow{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--graphite);
+}
+
+/* ---------- top bar ---------- */
+.topbar{
+  border-bottom:1px solid var(--rule);
+  padding:.9rem 0;
+  position:sticky;top:0;z-index:20;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(8px);
+}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.topbar nav{display:flex;gap:1.25rem;flex-wrap:wrap}
+.topbar nav a{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;color:var(--graphite);
+  padding-bottom:2px;border-bottom:1px solid transparent;
+}
+.topbar nav a:hover,.topbar nav a:focus-visible{color:var(--ink);border-bottom-color:var(--accent)}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(3rem,9vw,6.5rem) 0 clamp(2.5rem,6vw,4rem)}
+.hero h1{
+  font-size:clamp(2.7rem,10vw,6.2rem);
+  font-weight:700;line-height:.92;letter-spacing:-.035em;
+  text-transform:uppercase;
+}
+.hero h1 span{display:block}
+.hero h1 .lastname{color:var(--graphite)}
+.lede{
+  max-width:44ch;margin-top:1.6rem;
+  font-size:clamp(1.02rem,2.2vw,1.22rem);
+  color:#2C3238;
+}
+.contact{
+  display:flex;flex-wrap:wrap;gap:.5rem;
+  margin-top:2.2rem;
+}
+.contact a{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.76rem;letter-spacing:.04em;
+  text-decoration:none;
+  border:1px solid var(--rule);
+  padding:.5rem .85rem;
+  background:var(--sheet);
+  transition:border-color .15s,color .15s;
+}
+.contact a:hover,.contact a:focus-visible{border-color:var(--accent);color:var(--accent)}
+.contact a.primary{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.contact a.primary:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ---------- section heads ---------- */
+.sec-head{
+  display:flex;align-items:baseline;gap:1rem;
+  border-top:2px solid var(--ink);
+  padding-top:.6rem;margin-top:2rem;margin-bottom:2rem;
+}
+.sec-head h2{
+  font-size:1.05rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.sec-head .count{margin-left:auto}
+
+/* ---------- project sheets ---------- */
+.sheet{
+  background:var(--sheet);
+  border:1px solid var(--rule);
+  margin-bottom:1.5rem;
+  display:grid;
+  grid-template-columns:200px 1fr;
+}
+.sheet .spec{
+  border-right:1px solid var(--rule);
+  padding:1.4rem;
+  display:flex;flex-direction:column;gap:.95rem;
+}
+.spec .row .k{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--graphite);display:block;margin-bottom:.15rem;
+}
+.spec .row .v{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.78rem;line-height:1.4;
+}
+.sheet .body{padding:1.4rem clamp(1.4rem,3vw,2rem)}
+.sheet h3{
+  font-size:clamp(1.3rem,3vw,1.75rem);
+  font-weight:600;letter-spacing:-.02em;line-height:1.15;
+  margin-bottom:1.1rem;
+}
+.field{margin-bottom:1rem}
+.field .label{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);display:block;margin-bottom:.2rem;
+}
+.field p{font-size:.95rem;max-width:62ch}
+.media{margin-top:1.3rem}
+.ph{
+  aspect-ratio:16/9;
+  border:1px dashed var(--rule);
+  background:
+    repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(91,100,108,.06) 9px,rgba(91,100,108,.06) 18px);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.7rem;color:var(--graphite);text-align:center;padding:1rem;
+}
+.media img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+.caption{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.66rem;color:var(--graphite);margin-top:.5rem;
+}
+
+/* ---------- skills ---------- */
+.skills{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+}
+.skills div{
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:1.1rem 1.2rem;background:var(--sheet);
+}
+.skills h4{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);font-weight:500;margin-bottom:.5rem;
+}
+.skills p{font-size:.86rem;color:#2C3238}
+
+/* ---------- title block (footer) ---------- */
+footer{margin:4rem 0 3rem}
+.tblock{
+  border:2px solid var(--ink);
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  background:var(--sheet);
+}
+.tblock .cell{border-right:1px solid var(--rule);padding:1rem 1.1rem}
+.tblock .cell:last-child{border-right:none}
+.tblock .cell.full{grid-column:1/-1;border-right:none;border-top:1px solid var(--rule)}
+.tblock .k{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--graphite);display:block;margin-bottom:.25rem;
+}
+.tblock .v{
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-size:.82rem;word-break:break-word;
+}
+.tblock a{color:var(--accent)}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:720px){
+  .sheet{grid-template-columns:1fr}
+  .sheet .spec{
+    border-right:none;border-bottom:1px solid var(--rule);
+    flex-direction:row;flex-wrap:wrap;gap:1.1rem 1.6rem;
+  }
+  .tblock{grid-template-columns:1fr}
+  .tblock .cell{border-right:none;border-bottom:1px solid var(--rule)}
+  .tblock .cell.full{border-bottom:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <!-- EDIT: initials or short name -->
+    <span class="eyebrow">C. Chiumento — Mechanical Engineering</span>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <!-- EDIT: upload resume.pdf to your repo root -->
+      <a href="resume.pdf">Résumé</a>
+      <!-- EDIT: your email -->
+      <a href="mailto:you@example.com">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <!-- EDIT -->
+    <h1><span>Carson</span><span class="lastname">Chiumento</span></h1>
+
+    <!-- EDIT: Say what you do and what you're looking for. Be concrete.
+         Bad: "passionate engineer seeking opportunities"
+         Good: the example below. -->
+    <p class="lede">
+      Mechanical engineering student at <strong>[University]</strong>, graduating
+      <strong>[Month Year]</strong>. I work on [thermal systems / structural design /
+      manufacturing] — design through analysis through test. Looking for
+      [full-time / internship] roles in [industry].
+    </p>
+
+    <div class="contact">
+      <!-- EDIT all four -->
+      <a class="primary" href="resume.pdf">Download résumé (PDF)</a>
+      <a href="mailto:you@example.com">you@example.com</a>
+      <a href="https://linkedin.com/in/yourhandle">LinkedIn</a>
+      <a href="tel:+15555555555">(555) 555-5555</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="work">
+  <div class="sec-head">
+    <span class="eyebrow">Section</span>
+    <h2>Selected work</h2>
+    <span class="eyebrow count">03 sheets</span>
+  </div>
+
+  <!-- ========== PROJECT 1 — copy this whole block to add more ========== -->
+  <article class="sheet rv">
+    <div class="spec">
+      <div class="row"><span class="k">Role</span><span class="v">Lead designer</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">Jan–May 2026</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">SolidWorks<br>ANSYS Mechanical<br>MATLAB</span></div>
+      <div class="row"><span class="k">Made by</span><span class="v">CNC mill, 6061-T6</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">Built &amp; tested</span></div>
+    </div>
+
+    <div class="body">
+      <!-- EDIT: name the project by what it does, not a code name -->
+      <h3>Project title — what it actually does</h3>
+
+      <div class="field">
+        <span class="label">Problem &amp; constraints</span>
+        <p>What needed to exist, and what boxed you in — load case, envelope,
+        budget, cycle time, temperature range. Put real numbers here. Numbers are
+        the difference between a portfolio and a scrapbook.</p>
+      </div>
+
+      <div class="field">
+        <span class="label">Approach &amp; trade-offs</span>
+        <p>What you considered, what you picked, and what you rejected and why.
+        This is the part hiring managers actually read — it's the only evidence
+        of engineering judgment on the page.</p>
+      </div>
+
+      <div class="field">
+        <span class="label">Analysis</span>
+        <p>Method and stated assumptions. FEA mesh and boundary conditions, hand
+        calcs, factor of safety. Say what you assumed and why it was reasonable.</p>
+      </div>
+
+      <div class="field">
+        <span class="label">Result vs. prediction</span>
+        <p>What the test data said next to what you predicted. If it missed,
+        say by how much and what you learned. Owning a miss reads as more
+        credible than a page of successes.</p>
+      </div>
+
+      <div class="media">
+        <!-- EDIT: replace with <img src="img/project1.jpg" alt="..."> -->
+        <div class="ph">img/project1.jpg — render, photo of the built part,<br>or a drawing with GD&amp;T</div>
+        <p class="caption">Fig. 1 — caption saying what the reader should notice.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ========== PROJECT 2 ========== -->
+  <article class="sheet rv">
+    <div class="spec">
+      <div class="row"><span class="k">Role</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Made by</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">—</span></div>
+    </div>
+    <div class="body">
+      <h3>Second project</h3>
+      <div class="field"><span class="label">Problem &amp; constraints</span><p>—</p></div>
+      <div class="field"><span class="label">Approach &amp; trade-offs</span><p>—</p></div>
+      <div class="field"><span class="label">Analysis</span><p>—</p></div>
+      <div class="field"><span class="label">Result vs. prediction</span><p>—</p></div>
+      <div class="media">
+        <div class="ph">img/project2.jpg</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ========== PROJECT 3 ========== -->
+  <article class="sheet rv">
+    <div class="spec">
+      <div class="row"><span class="k">Role</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Made by</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">—</span></div>
+    </div>
+    <div class="body">
+      <h3>Third project</h3>
+      <div class="field"><span class="label">Problem &amp; constraints</span><p>—</p></div>
+      <div class="field"><span class="label">Approach &amp; trade-offs</span><p>—</p></div>
+      <div class="field"><span class="label">Analysis</span><p>—</p></div>
+      <div class="field"><span class="label">Result vs. prediction</span><p>—</p></div>
+      <div class="media">
+        <div class="ph">img/project3.jpg</div>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<section id="skills">
+  <div class="sec-head">
+    <span class="eyebrow">Section</span>
+    <h2>Capabilities</h2>
+  </div>
+
+  <!-- EDIT: only list what you'd be comfortable being tested on in an interview -->
+  <div class="skills rv">
+    <div>
+      <h4>CAD</h4>
+      <p>SolidWorks, NX, Fusion 360. GD&amp;T per ASME Y14.5, tolerance stack-ups.</p>
+    </div>
+    <div>
+      <h4>Analysis</h4>
+      <p>ANSYS Mechanical, static and modal FEA, thermal, hand calculations.</p>
+    </div>
+    <div>
+      <h4>Manufacturing</h4>
+      <p>CNC milling and turning, welding, sheet metal, FDM and SLA printing.</p>
+    </div>
+    <div>
+      <h4>Test &amp; data</h4>
+      <p>MATLAB, Python, LabVIEW. DAQ setup, strain gauges, thermocouples.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <div class="tblock rv">
+    <div class="cell">
+      <span class="k">Name</span>
+      <!-- EDIT -->
+      <span class="v">Carson Chiumento</span>
+    </div>
+    <div class="cell">
+      <span class="k">Discipline</span>
+      <span class="v">Mechanical Eng.</span>
+    </div>
+    <div class="cell">
+      <span class="k">Available</span>
+      <!-- EDIT -->
+      <span class="v">Month 2026</span>
+    </div>
+    <div class="cell full">
+      <span class="k">Contact</span>
+      <!-- EDIT -->
+      <span class="v">
+        <a href="mailto:you@example.com">you@example.com</a> &nbsp;·&nbsp;
+        <a href="https://linkedin.com/in/yourhandle">linkedin.com/in/yourhandle</a> &nbsp;·&nbsp;
+        <a href="resume.pdf">resume.pdf</a>
+      </span>
+    </div>
+    <div class="cell full">
+      <span class="k">Sheet</span>
+      <span class="v">carsonchiumento.com &nbsp;·&nbsp; last updated <span id="rev">—</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Stamps the date this file was last changed. Nothing to edit.
+document.getElementById('rev').textContent =
+  new Date(document.lastModified).toLocaleDateString('en-US',
+    {year:'numeric',month:'short',day:'numeric'});
+
+// Fade sections in on scroll.
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
