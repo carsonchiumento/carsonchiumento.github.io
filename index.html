@@ -3,19 +3,18 @@
   ============================================================
   HOW TO EDIT THIS FILE
   ============================================================
-  Everything you need to change is marked with  <!-- EDIT -->
   Change text between tags. Don't touch anything inside <style>
   unless you want to change colors/fonts.
 
-  TO ADD A PROJECT: copy one whole <article class="sheet">...</article>
-  block and paste it below the last one, then edit the text.
+  TO ADD A PROJECT: copy one whole article.sheet.rv block and paste
+  it below the last one, then edit the text. If you do, bump the
+  "04 sheets" count in the Selected work heading.
 
-  TO ADD IMAGES: make a folder in your repo called "img", upload
-  your photo/render there, then replace the <div class="ph">...</div>
-  with:   <img src="img/yourfile.jpg" alt="Short description">
-
-  TO ADD YOUR RESUME: upload it to the repo root as resume.pdf
-  (named exactly that, overwrite it each time you update).
+  TO ADD IMAGES: drop the file into the img/ folder that sits next to
+  this file, then copy an existing img tag inside a div.media and point
+  it at the new name. Keep names lowercase with no spaces: GitHub Pages
+  is case-sensitive even though macOS is not, so a capital letter works
+  on your laptop and breaks the live site.
   ============================================================
 -->
 <html lang="en">
@@ -23,13 +22,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- EDIT: your name + one-line description. This shows in Google results. -->
 <title>Carson Chiumento — Mechanical Engineer</title>
-<meta name="description" content="Mechanical engineering portfolio of Carson Chiumento. Design, analysis, and manufacturing projects.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Mechanical engineering portfolio of Carson Chiumento — University of Florida B.S. 2028. Robotics hardware, dynamometer design, FEA, and manufacturing.">
 
 <style>
 :root{
@@ -40,6 +34,9 @@
   --accent:#0E7C93;
   --sheet:#F7F8F8;
   --pad:clamp(1.25rem,4vw,3.5rem);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --gap:clamp(2.5rem,6vh,5rem);   /* one rhythm: between cards, before the title block, and below it */
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -47,39 +44,24 @@ html{scroll-behavior:smooth}
 body{
   background:var(--paper);
   color:var(--ink);
-  font-family:'Archivo',system-ui,sans-serif;
+  font-family:var(--sans);
   font-size:17px;
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
+  /* breathing room under the title block. PADDING, not margin: a bottom margin
+     on the last child collapses out through <body> and creates no space at all. */
+  padding-bottom:var(--gap);
 }
 .wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad)}
 a{color:inherit}
 
 /* ---------- utility type ---------- */
-.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.mono{font-family:var(--mono)}
 .eyebrow{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-family:var(--mono);
   font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--graphite);
 }
-
-/* ---------- top bar ---------- */
-.topbar{
-  border-bottom:1px solid var(--rule);
-  padding:.9rem 0;
-  position:sticky;top:0;z-index:20;
-  background:color-mix(in srgb,var(--paper) 88%,transparent);
-  backdrop-filter:blur(8px);
-}
-.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.topbar nav{display:flex;gap:1.25rem;flex-wrap:wrap}
-.topbar nav a{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
-  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
-  text-decoration:none;color:var(--graphite);
-  padding-bottom:2px;border-bottom:1px solid transparent;
-}
-.topbar nav a:hover,.topbar nav a:focus-visible{color:var(--ink);border-bottom-color:var(--accent)}
 
 /* ---------- hero ---------- */
 .hero{padding:clamp(3rem,9vw,6.5rem) 0 clamp(2.5rem,6vw,4rem)}
@@ -91,16 +73,17 @@ a{color:inherit}
 .hero h1 span{display:block}
 .hero h1 .lastname{color:var(--graphite)}
 .lede{
-  max-width:44ch;margin-top:1.6rem;
+  max-width:46ch;margin-top:1.6rem;
   font-size:clamp(1.02rem,2.2vw,1.22rem);
   color:#2C3238;
 }
+.lede + .lede{margin-top:.7rem}
 .contact{
   display:flex;flex-wrap:wrap;gap:.5rem;
   margin-top:2.2rem;
 }
-.contact a{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
+.contact a,.contact span.loc{
+  font-family:var(--mono);
   font-size:.76rem;letter-spacing:.04em;
   text-decoration:none;
   border:1px solid var(--rule);
@@ -108,9 +91,8 @@ a{color:inherit}
   background:var(--sheet);
   transition:border-color .15s,color .15s;
 }
+.contact span.loc{color:var(--graphite)}
 .contact a:hover,.contact a:focus-visible{border-color:var(--accent);color:var(--accent)}
-.contact a.primary{border-color:var(--ink);background:var(--ink);color:var(--paper)}
-.contact a.primary:hover{background:var(--accent);border-color:var(--accent);color:#fff}
 
 /* ---------- section heads ---------- */
 .sec-head{
@@ -127,8 +109,9 @@ a{color:inherit}
 /* ---------- project sheets ---------- */
 .sheet{
   background:var(--sheet);
+  max-width:100%;
   border:1px solid var(--rule);
-  margin-bottom:1.5rem;
+  margin-bottom:var(--gap);
   display:grid;
   grid-template-columns:200px 1fr;
 }
@@ -136,63 +119,76 @@ a{color:inherit}
   border-right:1px solid var(--rule);
   padding:1.4rem;
   display:flex;flex-direction:column;gap:.95rem;
+  min-width:0;
 }
 .spec .row .k{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-family:var(--mono);
   font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--graphite);display:block;margin-bottom:.15rem;
 }
 .spec .row .v{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-family:var(--mono);
   font-size:.78rem;line-height:1.4;
 }
-.sheet .body{padding:1.4rem clamp(1.4rem,3vw,2rem)}
+.sheet .body{padding:1.4rem clamp(1.4rem,3vw,2rem);min-width:0}
 .sheet h3{
   font-size:clamp(1.3rem,3vw,1.75rem);
   font-weight:600;letter-spacing:-.02em;line-height:1.15;
+  margin-bottom:.35rem;
+}
+.sheet .org{
+  font-family:var(--mono);
+  font-size:.72rem;letter-spacing:.06em;color:var(--graphite);
   margin-bottom:1.1rem;
 }
-.field{margin-bottom:1rem}
-.field .label{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent);display:block;margin-bottom:.2rem;
+.media{margin-top:1.6rem}
+/* extra air between one figure's caption and the next figure. Scoped to .media + .media
+   so the first figure keeps its original offset from the heading. */
+.media + .media{margin-top:1.9rem}  /* ...and half below, so the rule lands centred */
+.media img{width:100%;max-width:100%;height:auto;display:block;border:1px solid var(--rule)}
+.code{
+  border:1px solid var(--rule);background:var(--paper);
+  padding:.9rem 1.05rem;overflow-x:auto;
+  font-family:var(--mono);
+  font-size:.7rem;line-height:1.6;white-space:pre;
 }
-.field p{font-size:.95rem;max-width:62ch}
-.media{margin-top:1.3rem}
-.ph{
-  aspect-ratio:16/9;
-  border:1px dashed var(--rule);
-  background:
-    repeating-linear-gradient(45deg,transparent,transparent 9px,rgba(91,100,108,.06) 9px,rgba(91,100,108,.06) 18px);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
-  font-size:.7rem;color:var(--graphite);text-align:center;padding:1rem;
+.code .cm{color:var(--graphite)}
+.media .code + .dnote{margin-top:.8rem}
+.dnote{
+  font-size:.78rem;line-height:1.5;color:var(--graphite);
+  max-width:64ch;margin-bottom:.45rem;
 }
-.media img{width:100%;height:auto;display:block;border:1px solid var(--rule)}
+.dwrap{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+.dtable{
+  width:100%;border-collapse:collapse;
+  font-family:var(--mono);font-size:.72rem;
+}
+.dtable th,.dtable td{padding:.42rem .6rem;border-bottom:1px solid var(--rule);white-space:nowrap;text-align:right}
+.dtable tr:last-child td{border-bottom:none}
+.dtable th{
+  font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--graphite);font-weight:500;
+}
+.dtable th:nth-child(-n+4),.dtable td:nth-child(-n+4){text-align:left}
+.dtable tr.pick td{background:color-mix(in srgb,var(--accent) 12%,transparent);font-weight:600}
+/* The rule sits UNDER the caption, so it closes off the figure it belongs to and
+   separates it from the next one. Above the caption it was doing the opposite —
+   fencing the words off from their own picture. Spans the full figure width; the
+   prose inside stops at a readable measure. */
 .caption{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
-  font-size:.66rem;color:var(--graphite);margin-top:.5rem;
+  margin-top:.95rem;
+  padding-bottom:1.9rem;   /* half the gap sits above the rule... */
+  border-bottom:1px solid var(--rule);
 }
-
-/* ---------- skills ---------- */
-.skills{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+/* nothing follows the last figure, so it needs no closing rule */
+.media:last-child .caption{border-bottom:none;padding-bottom:0}
+.caption p{
+  font-size:.9rem;line-height:1.6;color:#3A4249;
+  max-width:64ch;
 }
-.skills div{
-  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
-  padding:1.1rem 1.2rem;background:var(--sheet);
-}
-.skills h4{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent);font-weight:500;margin-bottom:.5rem;
-}
-.skills p{font-size:.86rem;color:#2C3238}
 
 /* ---------- title block (footer) ---------- */
-footer{margin:4rem 0 3rem}
+footer{margin:var(--gap) 0 0}
 .tblock{
   border:2px solid var(--ink);
   display:grid;grid-template-columns:2fr 1fr 1fr;
@@ -202,12 +198,12 @@ footer{margin:4rem 0 3rem}
 .tblock .cell:last-child{border-right:none}
 .tblock .cell.full{grid-column:1/-1;border-right:none;border-top:1px solid var(--rule)}
 .tblock .k{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-family:var(--mono);
   font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--graphite);display:block;margin-bottom:.25rem;
 }
 .tblock .v{
-  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  font-family:var(--mono);
   font-size:.82rem;word-break:break-word;
 }
 .tblock a{color:var(--accent)}
@@ -237,42 +233,23 @@ footer{margin:4rem 0 3rem}
 
 <body>
 
-<div class="topbar">
-  <div class="wrap">
-    <!-- EDIT: initials or short name -->
-    <span class="eyebrow">C. Chiumento — Mechanical Engineering</span>
-    <nav>
-      <a href="#work">Work</a>
-      <a href="#skills">Skills</a>
-      <!-- EDIT: upload resume.pdf to your repo root -->
-      <a href="resume.pdf">Résumé</a>
-      <!-- EDIT: your email -->
-      <a href="mailto:you@example.com">Contact</a>
-    </nav>
-  </div>
-</div>
-
 <header class="hero">
   <div class="wrap">
-    <!-- EDIT -->
     <h1><span>Carson</span><span class="lastname">Chiumento</span></h1>
 
-    <!-- EDIT: Say what you do and what you're looking for. Be concrete.
-         Bad: "passionate engineer seeking opportunities"
-         Good: the example below. -->
     <p class="lede">
-      Mechanical engineering student at <strong>[University]</strong>, graduating
-      <strong>[Month Year]</strong>. I work on [thermal systems / structural design /
-      manufacturing] — design through analysis through test. Looking for
-      [full-time / internship] roles in [industry].
+      Mechanical engineering student at the University of Florida,
+      B.S. May 2028.
+    </p>
+    <p class="lede">
+      Currently redesigning aerial and ground platforms at Docking Robotics
+      and leading the regenerative dynamometer program at Gator Motorsports.
     </p>
 
     <div class="contact">
-      <!-- EDIT all four -->
-      <a class="primary" href="resume.pdf">Download résumé (PDF)</a>
-      <a href="mailto:you@example.com">you@example.com</a>
-      <a href="https://linkedin.com/in/yourhandle">LinkedIn</a>
-      <a href="tel:+15555555555">(555) 555-5555</a>
+      <a href="mailto:carson.chiumento@gmail.com">carson.chiumento@gmail.com</a>
+      <a href="tel:+13869991421">(386) 999-1421</a>
+      <span class="loc">Ormond Beach, FL</span>
     </div>
   </div>
 </header>
@@ -283,127 +260,192 @@ footer{margin:4rem 0 3rem}
   <div class="sec-head">
     <span class="eyebrow">Section</span>
     <h2>Selected work</h2>
-    <span class="eyebrow count">03 sheets</span>
+    <span class="eyebrow count">04 sheets</span>
   </div>
 
-  <!-- ========== PROJECT 1 — copy this whole block to add more ========== -->
+  <!-- ========== 1 — DYNAMOMETER ========== -->
   <article class="sheet rv">
     <div class="spec">
-      <div class="row"><span class="k">Role</span><span class="v">Lead designer</span></div>
-      <div class="row"><span class="k">Timeline</span><span class="v">Jan–May 2026</span></div>
-      <div class="row"><span class="k">Tools</span><span class="v">SolidWorks<br>ANSYS Mechanical<br>MATLAB</span></div>
-      <div class="row"><span class="k">Made by</span><span class="v">CNC mill, 6061-T6</span></div>
-      <div class="row"><span class="k">Status</span><span class="v">Built &amp; tested</span></div>
+      <div class="row"><span class="k">Role</span><span class="v">Dynamometer &amp;<br>validation lead</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">Dec 2025 – Present</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Gainesville, FL</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">ANSYS<br>MATLAB<br>SolidWorks</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">In design &amp; build</span></div>
     </div>
 
     <div class="body">
-      <!-- EDIT: name the project by what it does, not a code name -->
-      <h3>Project title — what it actually does</h3>
+      <h3>Regenerative dynamometer for in-hub motor testing</h3>
+      <p class="org">Gator Motorsports — University of Florida</p>
 
-      <div class="field">
-        <span class="label">Problem &amp; constraints</span>
-        <p>What needed to exist, and what boxed you in — load case, envelope,
-        budget, cycle time, temperature range. Put real numbers here. Numbers are
-        the difference between a portfolio and a scrapbook.</p>
-      </div>
 
-      <div class="field">
-        <span class="label">Approach &amp; trade-offs</span>
-        <p>What you considered, what you picked, and what you rejected and why.
-        This is the part hiring managers actually read — it's the only evidence
-        of engineering judgment on the page.</p>
-      </div>
 
-      <div class="field">
-        <span class="label">Analysis</span>
-        <p>Method and stated assumptions. FEA mesh and boundary conditions, hand
-        calcs, factor of safety. Say what you assumed and why it was reasonable.</p>
-      </div>
-
-      <div class="field">
-        <span class="label">Result vs. prediction</span>
-        <p>What the test data said next to what you predicted. If it missed,
-        say by how much and what you learned. Owning a miss reads as more
-        credible than a page of successes.</p>
+      <div class="media">
+        <img src="img/dyno-assembly.jpg" alt="SolidWorks render of the dynamometer: two in-hub motor assemblies mounted back-to-back on triangular pedestal brackets bolted to a baseplate, joined by two couplings with an in-line torque transducer between them.">
+        <div class="caption"><p>The stand the rest of this work sizes. Facing two in-hub motors
+        back-to-back through one transducer lets the rig load a motor with another motor rather than
+        a brake, which is what makes it regenerative.</p></div>
       </div>
 
       <div class="media">
-        <!-- EDIT: replace with <img src="img/project1.jpg" alt="..."> -->
-        <div class="ph">img/project1.jpg — render, photo of the built part,<br>or a drawing with GD&amp;T</div>
-        <p class="caption">Fig. 1 — caption saying what the reader should notice.</p>
+        <img src="img/adapter-plate-design-study.png" alt="SolidWorks design study on the adapter plate: the triangular plate with its cylindrical boss above a results table of 35 scenarios sweeping outside diameter and base thickness, with scenario 30 marked optimal in green.">
+        <div class="caption"><p>The plate moved from aluminium to steel for a better balance of
+        stiffness against inertia. This study then settled the two dimensions that choice leaves
+        open: outside diameter and base thickness. Displacement, not mass, was the binding
+        constraint.</p></div>
+      </div>
+
+      <div class="media">
+        <img src="img/adapter-plate-fea.png" alt="ANSYS static structural result on the adapter plate: the meshed triangular plate and cylindrical boss contoured by equivalent von Mises stress, with a legend running from 51.5 MPa down to near zero.">
+        <div class="caption"><p>Verification rather than exploration. With the dimensions
+        settled, this confirmed the plate carries the 500 N·m load case to a
+        2× safety factor before anything was cut.</p></div>
+      </div>
+
+      <div class="media">
+        <pre class="code"><span class="cm">% --- System equivalent stiffness (series) ---</span>
+inv_k = (1/k_a1) + (1/k_c1) + (1/k_t) + (1/k_c2) + (1/k_a2);
+k_sys = 1 / inv_k;
+
+<span class="cm">% --- System total inertia (sum) ---</span>
+j_sys = j_a1 + j_c1 + j_t + j_c2 + j_a2;
+
+<span class="cm">% --- Natural Frequency (Hz) ---</span>
+fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
+
+        <p class="dnote">The leading seven of the ranked builds. Each is symmetric, so the adapter
+        and coupling columns stand for a matched pair: adapter · coupling · transducer · coupling ·
+        adapter.</p>
+        <div class="dwrap">
+          <table class="dtable">
+            <thead>
+              <tr><th>#</th><th>Adapter</th><th>Coupling</th><th>Transducer</th><th>k (N·m/rad)</th><th>J (kg·m²)</th><th>f<sub>n</sub> (Hz)</th></tr>
+            </thead>
+            <tbody>
+              <tr class="pick"><td>1</td><td>3 Hole, 0.240, 4140 HT</td><td>HBK_MBC_1000</td><td>HBK_T22_500 (0.3)</td><td>104033</td><td>0.00761</td><td>588.26</td></tr>
+              <tr><td>2</td><td>6 Hole, 0.350, 6061T6</td><td>RW_BK1_500</td><td>HBK_T110_500 (0.03)</td><td>124897</td><td>0.01330</td><td>487.72</td></tr>
+              <tr><td>3</td><td>3 Hole, 0.240, 4140 HT</td><td>RW_LP1S_500</td><td>HBK_T22_500 (0.3)</td><td>74599</td><td>0.00813</td><td>481.96</td></tr>
+              <tr><td>4</td><td>6 Hole, 0.350, 6061T6</td><td>RW_BK1_500</td><td>HBK_T40B_500 (0.05)</td><td>121960</td><td>0.01340</td><td>480.15</td></tr>
+              <tr><td>5</td><td>6 Hole, 0.350, 6061T6</td><td>RW_BK1_500</td><td>HBK_T40Lite_500 (0.08)</td><td>121960</td><td>0.01340</td><td>480.15</td></tr>
+              <tr><td>6</td><td>6 Hole, 0.350, 6061T6</td><td>RW_BK1_500</td><td>HBK_T12HP_500 (0.02)</td><td>114824</td><td>0.01450</td><td>447.87</td></tr>
+              <tr><td>7</td><td>3 Hole, 0.240, 4140 HT</td><td>RW_LP1S_700</td><td>HBK_T22_500 (0.3)</td><td>95079</td><td>0.01213</td><td>445.50</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="caption"><p>Stiffness and inertia anywhere in the driveline contaminate the
+        transient torque reading, so components could not be chosen one at a time. Ranking whole builds on
+        first natural frequency folds both into a single number. That is why rank 2 loses
+        despite being 20% stiffer than rank 1: it carries 75% more inertia.
+        Pushing that first mode high enough is what lets the rig run dynamic tests at all.</p></div>
       </div>
     </div>
   </article>
 
-  <!-- ========== PROJECT 2 ========== -->
+  <!-- ========== 2 — DOCKING ROBOTICS ========== -->
   <article class="sheet rv">
     <div class="spec">
-      <div class="row"><span class="k">Role</span><span class="v">—</span></div>
-      <div class="row"><span class="k">Timeline</span><span class="v">—</span></div>
-      <div class="row"><span class="k">Tools</span><span class="v">—</span></div>
-      <div class="row"><span class="k">Made by</span><span class="v">—</span></div>
-      <div class="row"><span class="k">Status</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Role</span><span class="v">Mechatronics<br>engineering intern</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">May 2026 – Present</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Daytona Beach, FL</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">SolidWorks</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">Built into hardware</span></div>
     </div>
+
     <div class="body">
-      <h3>Second project</h3>
-      <div class="field"><span class="label">Problem &amp; constraints</span><p>—</p></div>
-      <div class="field"><span class="label">Approach &amp; trade-offs</span><p>—</p></div>
-      <div class="field"><span class="label">Analysis</span><p>—</p></div>
-      <div class="field"><span class="label">Result vs. prediction</span><p>—</p></div>
+      <h3>Aerial &amp; ground platform redesign</h3>
+      <p class="org">Docking Robotics</p>
+
+
+
       <div class="media">
-        <div class="ph">img/project2.jpg</div>
+        <img src="img/docking-motor-arm.png" alt="SolidWorks render of the redesigned drone motor arm: an olive-coloured arm with rows of lightening slots along its web and a triangulated truss at the root, bolted through a grey plate to a red baseplate.">
+        <div class="caption"><p>Longer arms carry the props further from the centre of mass for
+        stability, and raising them stops the camera module blocking lift while giving it the
+        clearance it needs. The arms are 3D printed, so infill and cutout pattern
+        were tuned together for strength-to-weight.</p></div>
+      </div>
+
+      <div class="media">
+        <img src="img/docking-landing-cradle.png" alt="SolidWorks render of the articulating landing cradle: a circular landing platform carried on a scissor linkage above a yellow deck plate, driven by an actuator, mounted to base brackets on rails.">
+        <div class="caption"><p>The cradle that lets the aerial platform dock with the ground
+        platform.</p></div>
       </div>
     </div>
   </article>
 
-  <!-- ========== PROJECT 3 ========== -->
+  <!-- ========== 3 — IN-HUB MOTOR ========== -->
   <article class="sheet rv">
     <div class="spec">
-      <div class="row"><span class="k">Role</span><span class="v">—</span></div>
-      <div class="row"><span class="k">Timeline</span><span class="v">—</span></div>
-      <div class="row"><span class="k">Tools</span><span class="v">—</span></div>
-      <div class="row"><span class="k">Made by</span><span class="v">—</span></div>
-      <div class="row"><span class="k">Status</span><span class="v">—</span></div>
+      <div class="row"><span class="k">Role</span><span class="v">In-hub motor<br>design engineer</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">Jan 2025 – Present</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Gainesville, FL</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">Siemens NX<br>MATLAB</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">Released for FSAE</span></div>
     </div>
+
     <div class="body">
-      <h3>Third project</h3>
-      <div class="field"><span class="label">Problem &amp; constraints</span><p>—</p></div>
-      <div class="field"><span class="label">Approach &amp; trade-offs</span><p>—</p></div>
-      <div class="field"><span class="label">Analysis</span><p>—</p></div>
-      <div class="field"><span class="label">Result vs. prediction</span><p>—</p></div>
+      <h3>Parametric modeling of the in-hub gear set</h3>
+      <p class="org">Gator Motorsports — University of Florida</p>
+
+
+
       <div class="media">
-        <div class="ph">img/project3.jpg</div>
+        <img src="img/nx-gear-expressions.png" alt="Siemens NX Part Navigator showing the User Expressions list that drives a parametric gear profile, with module, tooth number and pressure angle as inputs, beside the generated tooth geometry in the viewport.">
+        <div class="caption"><p>The tooth counts were still moving while the set was being sized, and a
+        gear redrawn by hand every time they change is a gear drawn wrong eventually. Inputs hold
+        numbers, every other row is a formula referencing them, so a new set gets typed in rather
+        than modelled again.</p></div>
+      </div>
+
+      <div class="media">
+        <pre class="code">for z3 = max_z3-40:1:max_z3 <span class="cm">%search for ring gears that are right near the max it can be</span>
+
+    if z3&gt;135 <span class="cm">%Don't let ring gear get too big for interpolation tables</span>
+        continue
+    end
+
+    for z1 = 12:1:20 <span class="cm">%search for sun gears right near minimum</span>
+        <span class="cm">⋮</span>
+        <span class="cm">%check if hunting ratio, nice to have</span>
+        gcd_mesh1 = gcd(z2,z1) == 1;
+        gcd_mesh2 = gcd(z3,z2p) == 1;
+        hunting_ratio = gcd_mesh1 &amp;&amp; gcd_mesh2;</pre>
+        <div class="caption"><p>What fed those numbers. The search itself was not mine. It was already sweeping every gear
+        combination against AGMA bending and contact limits, but slowly enough to be awkward to
+        iterate on. Feasible sets only ever land where the ring gear is near its package limit and
+        the sun near its minimum, so the sweep was bounded to that corner rather than the whole
+        space. The hunting-ratio check went in alongside it: coprime meshes let every tooth
+        eventually meet every other, so wear spreads instead of repeating the same pairings.</p></div>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- ========== 4 — ABORT SEQUENCING ========== -->
+  <article class="sheet rv">
+    <div class="spec">
+      <div class="row"><span class="k">Role</span><span class="v">Sole designer</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">March 2026</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Gainesville, FL</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">Arduino IDE</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">Validated in test</span></div>
+    </div>
+
+    <div class="body">
+      <h3>Autonomous abort sequencing — a five-state fail-safe controller</h3>
+      <p class="org">University of Florida</p>
+
+
+
+      <div class="media">
+        <img src="img/abort-fsm-bench.jpg" alt="The Arduino test bench: a breadboard carrying status LEDs, a buzzer, a potentiometer, an IR receiver and a joystick, wired to an Arduino board, with a micro servo, a DC fan, an IR remote and a stepper motor with its driver arranged around it.">
+        <div class="caption"><p>Built as the end-of-term project for an electrical engineering
+        class. A five-state machine, exercised on this bench by injecting the
+        lost-link, thermal and geofence faults it exists to catch, with all
+        eight subsystems logged.</p></div>
       </div>
     </div>
   </article>
 
-</section>
-
-<section id="skills">
-  <div class="sec-head">
-    <span class="eyebrow">Section</span>
-    <h2>Capabilities</h2>
-  </div>
-
-  <!-- EDIT: only list what you'd be comfortable being tested on in an interview -->
-  <div class="skills rv">
-    <div>
-      <h4>CAD</h4>
-      <p>SolidWorks, NX, Fusion 360. GD&amp;T per ASME Y14.5, tolerance stack-ups.</p>
-    </div>
-    <div>
-      <h4>Analysis</h4>
-      <p>ANSYS Mechanical, static and modal FEA, thermal, hand calculations.</p>
-    </div>
-    <div>
-      <h4>Manufacturing</h4>
-      <p>CNC milling and turning, welding, sheet metal, FDM and SLA printing.</p>
-    </div>
-    <div>
-      <h4>Test &amp; data</h4>
-      <p>MATLAB, Python, LabVIEW. DAQ setup, strain gauges, thermocouples.</p>
-    </div>
-  </div>
 </section>
 
 </main>
@@ -412,7 +454,6 @@ footer{margin:4rem 0 3rem}
   <div class="tblock rv">
     <div class="cell">
       <span class="k">Name</span>
-      <!-- EDIT -->
       <span class="v">Carson Chiumento</span>
     </div>
     <div class="cell">
@@ -420,17 +461,15 @@ footer{margin:4rem 0 3rem}
       <span class="v">Mechanical Eng.</span>
     </div>
     <div class="cell">
-      <span class="k">Available</span>
-      <!-- EDIT -->
-      <span class="v">Month 2026</span>
+      <span class="k">Graduating</span>
+      <span class="v">May 2028</span>
     </div>
     <div class="cell full">
       <span class="k">Contact</span>
-      <!-- EDIT -->
       <span class="v">
-        <a href="mailto:you@example.com">you@example.com</a> &nbsp;·&nbsp;
-        <a href="https://linkedin.com/in/yourhandle">linkedin.com/in/yourhandle</a> &nbsp;·&nbsp;
-        <a href="resume.pdf">resume.pdf</a>
+        <a href="mailto:carson.chiumento@gmail.com">carson.chiumento@gmail.com</a> &nbsp;·&nbsp;
+        <a href="tel:+13869991421">(386) 999-1421</a> &nbsp;·&nbsp;
+        Ormond Beach, FL
       </span>
     </div>
     <div class="cell full">
