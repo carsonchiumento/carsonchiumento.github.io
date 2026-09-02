@@ -22,6 +22,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Keep this page out of search results. Reachable by anyone with the link,
+     but not indexed. NOTE: do not also add a robots.txt Disallow rule — that
+     blocks crawlers from fetching the page, so they never see this tag, and
+     the bare URL can still surface in results. This tag alone is the fix. -->
+<meta name="robots" content="noindex, nofollow">
+
 <title>Carson Chiumento — Mechanical Engineer</title>
 <meta name="description" content="Mechanical engineering portfolio of Carson Chiumento — University of Florida B.S. 2028. Robotics hardware, dynamometer design, FEA, and manufacturing.">
 
@@ -247,8 +253,6 @@ footer{margin:var(--gap) 0 0}
     </p>
 
     <div class="contact">
-      <a href="mailto:carson.chiumento@gmail.com">carson.chiumento@gmail.com</a>
-      <a href="tel:+13869991421">(386) 999-1421</a>
       <span class="loc">Ormond Beach, FL</span>
     </div>
   </div>
@@ -465,12 +469,8 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
       <span class="v">May 2028</span>
     </div>
     <div class="cell full">
-      <span class="k">Contact</span>
-      <span class="v">
-        <a href="mailto:carson">carson</a> &nbsp;·&nbsp;
-        <a href="tel:+">(386</a> &nbsp;·&nbsp;
-        Ormond Beach, FL
-      </span>
+      <span class="k">Based in</span>
+      <span class="v">Ormond Beach, FL</span>
     </div>
     <div class="cell full">
       <span class="k">Sheet</span>

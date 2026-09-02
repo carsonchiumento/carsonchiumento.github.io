@@ -1,0 +1,6 @@
+.DS_Store
+Thumbs.db
+_source/
+
+# local working notes — not for the public repo
+CLAUDE.md
