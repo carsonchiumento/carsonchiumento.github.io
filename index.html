@@ -432,17 +432,12 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     </div>
     <div class="cell full">
       <span class="k">Sheet</span>
-      <span class="v">carsonchiumento.com &nbsp;·&nbsp; last updated <span id="rev">—</span></span>
+      <span class="v">carsonchiumento.com</span>
     </div>
   </div>
 </footer>
 
 <script>
-// Stamps the date this file was last changed. Nothing to edit.
-document.getElementById('rev').textContent =
-  new Date(document.lastModified).toLocaleDateString('en-US',
-    {year:'numeric',month:'short',day:'numeric'});
-
 // Fade sections in on scroll.
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
