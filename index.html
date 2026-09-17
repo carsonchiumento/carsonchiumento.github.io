@@ -80,6 +80,13 @@ a{color:inherit}
 }
 .hero h1 span{display:block}
 .hero h1 .lastname{color:var(--graphite)}
+/* tells a first-time visitor what the page is, without competing with the name */
+.hero .subtitle{
+  margin-top:1.1rem;
+  font-size:clamp(1.05rem,2.4vw,1.35rem);
+  font-weight:600;letter-spacing:-.01em;
+  color:var(--ink);
+}
 
 /* ---------- project sheets ---------- */
 .sheet{
@@ -211,6 +218,7 @@ footer{margin:var(--gap) 0 0}
 <header class="hero">
   <div class="wrap">
     <h1><span>Carson</span><span class="lastname">Chiumento</span></h1>
+    <p class="subtitle">Engineering Portfolio</p>
   </div>
 </header>
 
