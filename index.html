@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  HOW TO EDIT THIS FILE
+  ============================================================
+  Change text between tags. Don't touch anything inside <style>
+  unless you want to change colors/fonts.
+
+  TO ADD A PROJECT: copy one whole article.sheet.rv block and paste
+  it below the last one, then edit the text.
+
+  TO ADD IMAGES: drop the file into the img/ folder that sits next to
+  this file, then copy an existing img tag inside a div.media and point
+  it at the new name. Keep names lowercase with no spaces: GitHub Pages
+  is case-sensitive even though macOS is not, so a capital letter works
+  on your laptop and breaks the live site.
+  ============================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Keep this page out of search results. Reachable by anyone with the link,
+     but not indexed. NOTE: do not also add a robots.txt Disallow rule — that
+     blocks crawlers from fetching the page, so they never see this tag, and
+     the bare URL can still surface in results. This tag alone is the fix. -->
+<meta name="robots" content="noindex, nofollow">
+
+<title>Carson Chiumento — Mechanical Engineer</title>
+<meta name="description" content="Mechanical engineering portfolio of Carson Chiumento — University of Florida B.S. 2028. Robotics hardware, dynamometer design, FEA, and manufacturing.">
+
+<style>
+:root{
+  --paper:#EDEEEF;
+  --ink:#14171A;
+  --graphite:#5B646C;
+  --rule:#C6CBCF;
+  --accent:#0E7C93;
+  --sheet:#F7F8F8;
+  --pad:clamp(1.25rem,4vw,3.5rem);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --gap:clamp(2.5rem,6vh,5rem);   /* one rhythm: between cards, before the title block, and below it */
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  /* breathing room under the title block. PADDING, not margin: a bottom margin
+     on the last child collapses out through <body> and creates no space at all. */
+  padding-bottom:var(--gap);
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad)}
+a{color:inherit}
+
+/* ---------- utility type ---------- */
+.mono{font-family:var(--mono)}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(3rem,9vw,6.5rem) 0 var(--gap)}  /* same gap as between cards */
+.hero h1{
+  font-size:clamp(2.7rem,10vw,6.2rem);
+  font-weight:700;line-height:.92;letter-spacing:-.035em;
+  text-transform:uppercase;
+}
+.hero h1 span{display:block}
+.hero h1 .lastname{color:var(--graphite)}
+
+/* ---------- project sheets ---------- */
+.sheet{
+  background:var(--sheet);
+  max-width:100%;
+  border:1px solid var(--rule);
+  margin-bottom:var(--gap);
+  display:grid;
+  grid-template-columns:200px 1fr;
+}
+.sheet .spec{
+  border-right:1px solid var(--rule);
+  padding:1.4rem;
+  display:flex;flex-direction:column;gap:.95rem;
+  min-width:0;
+}
+.spec .row .k{
+  font-family:var(--mono);
+  font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--graphite);display:block;margin-bottom:.15rem;
+}
+.spec .row .v{
+  font-family:var(--mono);
+  font-size:.78rem;line-height:1.4;
+}
+.sheet .body{padding:1.4rem clamp(1.4rem,3vw,2rem);min-width:0}
+.sheet h3{
+  font-size:clamp(1.3rem,3vw,1.75rem);
+  font-weight:600;letter-spacing:-.02em;line-height:1.15;
+  margin-bottom:.35rem;
+}
+.sheet .org{
+  font-family:var(--mono);
+  font-size:.72rem;letter-spacing:.06em;color:var(--graphite);
+  margin-bottom:1.1rem;
+}
+.media{margin-top:1.6rem}
+/* extra air between one figure's caption and the next figure. Scoped to .media + .media
+   so the first figure keeps its original offset from the heading. */
+.media + .media{margin-top:1.9rem}  /* ...and half below, so the rule lands centred */
+.media img{width:100%;max-width:100%;height:auto;display:block;border:1px solid var(--rule)}
+.code{
+  border:1px solid var(--rule);background:var(--paper);
+  padding:.9rem 1.05rem;overflow-x:auto;
+  font-family:var(--mono);
+  font-size:.7rem;line-height:1.6;white-space:pre;
+}
+.code .cm{color:var(--graphite)}
+.media .code + .dnote{margin-top:.8rem}
+.dnote{
+  font-size:.78rem;line-height:1.5;color:var(--graphite);
+  max-width:64ch;margin-bottom:.45rem;
+}
+.dwrap{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+.dtable{
+  width:100%;border-collapse:collapse;
+  font-family:var(--mono);font-size:.72rem;
+}
+.dtable th,.dtable td{padding:.42rem .6rem;border-bottom:1px solid var(--rule);white-space:nowrap;text-align:right}
+.dtable tr:last-child td{border-bottom:none}
+.dtable th{
+  font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--graphite);font-weight:500;
+}
+.dtable th:nth-child(-n+4),.dtable td:nth-child(-n+4){text-align:left}
+.dtable tr.pick td{background:color-mix(in srgb,var(--accent) 12%,transparent);font-weight:600}
+/* The rule sits UNDER the caption, so it closes off the figure it belongs to and
+   separates it from the next one. Above the caption it was doing the opposite —
+   fencing the words off from their own picture. Spans the full figure width; the
+   prose inside stops at a readable measure. */
+.caption{
+  margin-top:.95rem;
+  padding-bottom:1.9rem;   /* half the gap sits above the rule... */
+  border-bottom:1px solid var(--rule);
+}
+/* nothing follows the last figure, so it needs no closing rule */
+.media:last-child .caption{border-bottom:none;padding-bottom:0}
+.caption p{
+  font-size:.9rem;line-height:1.6;color:#3A4249;
+  max-width:64ch;
+}
+
+/* ---------- title block (footer) ---------- */
+footer{margin:var(--gap) 0 0}
+.tblock{
+  border:2px solid var(--ink);
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  background:var(--sheet);
+}
+.tblock .cell{border-right:1px solid var(--rule);padding:1rem 1.1rem}
+.tblock .cell:last-child{border-right:none}
+.tblock .cell.full{grid-column:1/-1;border-right:none;border-top:1px solid var(--rule)}
+.tblock .k{
+  font-family:var(--mono);
+  font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--graphite);display:block;margin-bottom:.25rem;
+}
+.tblock .v{
+  font-family:var(--mono);
+  font-size:.82rem;word-break:break-word;
+}
+.tblock a{color:var(--accent)}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:720px){
+  .sheet{grid-template-columns:1fr}
+  .sheet .spec{
+    border-right:none;border-bottom:1px solid var(--rule);
+    flex-direction:row;flex-wrap:wrap;gap:1.1rem 1.6rem;
+  }
+  .tblock{grid-template-columns:1fr}
+  .tblock .cell{border-right:none;border-bottom:1px solid var(--rule)}
+  .tblock .cell.full{border-bottom:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none;transition:none}
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1><span>Carson</span><span class="lastname">Chiumento</span></h1>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="work">
+  <!-- ========== 1 — DYNAMOMETER ========== -->
+  <article class="sheet rv">
+    <div class="spec">
+      <div class="row"><span class="k">Role</span><span class="v">Dynamometer &amp;<br>validation lead</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">Dec 2025 – Present</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Gainesville, FL</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">ANSYS<br>MATLAB<br>SolidWorks</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">In design &amp; build</span></div>
+    </div>
+
+    <div class="body">
+      <h3>Regenerative dynamometer for in-hub motor testing</h3>
+      <p class="org">Gator Motorsports — University of Florida</p>
+
+
+
+      <div class="media">
+        <img src="img/dyno-assembly.jpg" alt="SolidWorks render of the dynamometer: two in-hub motor assemblies mounted back-to-back on triangular pedestal brackets bolted to a baseplate, joined by two couplings with an in-line torque transducer between them.">
+        <div class="caption"><p>The stand the rest of this work sizes. Facing two in-hub motors
+        back-to-back through one transducer lets the rig load a motor with another motor rather than
+        a brake, which is what makes it regenerative.</p></div>
+      </div>
+
+      <div class="media">
+        <img src="img/adapter-plate-design-study.png" alt="SolidWorks design study on the adapter plate: the triangular plate with its cylindrical boss above a results table of 35 scenarios sweeping outside diameter and base thickness, with scenario 30 marked optimal in green.">
+        <div class="caption"><p>The plate moved from aluminium to steel for a better balance of
+        stiffness against inertia. This study then settled the two dimensions that choice leaves
+        open: outside diameter and base thickness. Displacement, not mass, was the binding
+        constraint.</p></div>
+      </div>
+
+      <div class="media">
+        <img src="img/adapter-plate-fea.png" alt="ANSYS static structural result on the adapter plate: the meshed triangular plate and cylindrical boss contoured by equivalent von Mises stress, with a legend running from 51.5 MPa down to near zero.">
+        <div class="caption"><p>Verification rather than exploration. With the dimensions
+        settled, this confirmed the plate carries the 500 N·m load case to a
+        2× safety factor before anything was cut.</p></div>
+      </div>
+
+      <div class="media">
+        <pre class="code"><span class="cm">% --- System equivalent stiffness (series) ---</span>
+inv_k = (1/k_a1) + (1/k_c1) + (1/k_t) + (1/k_c2) + (1/k_a2);
+k_sys = 1 / inv_k;
+
+<span class="cm">% --- System total inertia (sum) ---</span>
+j_sys = j_a1 + j_c1 + j_t + j_c2 + j_a2;
+
+<span class="cm">% --- Natural Frequency (Hz) ---</span>
+fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
+
+        <p class="dnote">The leading seven of the ranked builds. Each is symmetric, so the adapter
+        and coupling columns stand for a matched pair: adapter · coupling · transducer · coupling ·
+        adapter.</p>
+        <div class="dwrap">
+          <table class="dtable">
+            <thead>
+              <tr><th>#</th><th>Adapter</th><th>Coupling</th><th>Transducer</th><th>k (N·m/rad)</th><th>J (kg·m²)</th><th>f<sub>n</sub> (Hz)</th></tr>
+            </thead>
+            <tbody>
+              <tr class="pick"><td>1</td><td>3 Hole, 0.240, 4140 HT</td><td>HBK_MBC_1000</td><td>HBK_T22_500 (0.3)</td><td>104033</td><td>0.00761</td><td>588.26</td></tr>
+              <tr><td>2</td><td>6 Hole, 0.350, 6061T6</td><td>RW_BK1_500</td><td>HBK_T110_500 (0.03)</td><td>124897</td><td>0.01330</td><td>487.72</td></tr>
+              <tr><td>3</td><td>3 Hole, 0.240, 4140 HT</td><td>RW_LP1S_500</td><td>HBK_T22_500 (0.3)</td><td>74599</td><td>0.00813</td><td>481.96</td></tr>
+              <tr><td>4</td><td>6 Hole, 0.350, 6061T6</td><td>RW_BK1_500</td><td>HBK_T40B_500 (0.05)</td><td>121960</td><td>0.01340</td><td>480.15</td></tr>
+              <tr><td>5</td><td>6 Hole, 0.350, 6061T6</td><td>RW_BK1_500</td><td>HBK_T40Lite_500 (0.08)</td><td>121960</td><td>0.01340</td><td>480.15</td></tr>
+              <tr><td>6</td><td>6 Hole, 0.350, 6061T6</td><td>RW_BK1_500</td><td>HBK_T12HP_500 (0.02)</td><td>114824</td><td>0.01450</td><td>447.87</td></tr>
+              <tr><td>7</td><td>3 Hole, 0.240, 4140 HT</td><td>RW_LP1S_700</td><td>HBK_T22_500 (0.3)</td><td>95079</td><td>0.01213</td><td>445.50</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="caption"><p>Stiffness and inertia anywhere in the driveline contaminate the
+        transient torque reading, so components could not be chosen one at a time. Ranking whole builds on
+        first natural frequency folds both into a single number. That is why rank 2 loses
+        despite being 20% stiffer than rank 1: it carries 75% more inertia.
+        Pushing that first mode high enough is what lets the rig run dynamic tests at all.</p></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ========== 2 — DOCKING ROBOTICS ========== -->
+  <article class="sheet rv">
+    <div class="spec">
+      <div class="row"><span class="k">Role</span><span class="v">Mechatronics<br>engineering intern</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">May 2026 – Present</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Daytona Beach, FL</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">SolidWorks</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">Built into hardware</span></div>
+    </div>
+
+    <div class="body">
+      <h3>Aerial &amp; ground platform redesign</h3>
+      <p class="org">Docking Robotics</p>
+
+
+
+      <div class="media">
+        <img src="img/docking-motor-arm.png" alt="SolidWorks render of the redesigned drone motor arm: an olive-coloured arm with rows of lightening slots along its web and a triangulated truss at the root, bolted through a grey plate to a red baseplate.">
+        <div class="caption"><p>Longer arms carry the props further from the centre of mass for
+        stability, and raising them stops the camera module blocking lift while giving it the
+        clearance it needs. The arms are 3D printed, so infill and cutout pattern
+        were tuned together for strength-to-weight.</p></div>
+      </div>
+
+      <div class="media">
+        <img src="img/docking-landing-cradle.png" alt="SolidWorks render of the articulating landing cradle: a circular landing platform carried on a scissor linkage above a yellow deck plate, driven by an actuator, mounted to base brackets on rails.">
+        <div class="caption"><p>The cradle that lets the aerial platform dock with the ground
+        platform.</p></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ========== 3 — IN-HUB MOTOR ========== -->
+  <article class="sheet rv">
+    <div class="spec">
+      <div class="row"><span class="k">Role</span><span class="v">In-hub motor<br>design engineer</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">Jan 2025 – Present</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Gainesville, FL</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">Siemens NX<br>MATLAB</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">Released for FSAE</span></div>
+    </div>
+
+    <div class="body">
+      <h3>Parametric modeling of the in-hub gear set</h3>
+      <p class="org">Gator Motorsports — University of Florida</p>
+
+
+
+      <div class="media">
+        <img src="img/nx-gear-expressions.png" alt="Siemens NX Part Navigator showing the User Expressions list that drives a parametric gear profile, with module, tooth number and pressure angle as inputs, beside the generated tooth geometry in the viewport.">
+        <div class="caption"><p>The tooth counts were still moving while the set was being sized, and a
+        gear redrawn by hand every time they change is a gear drawn wrong eventually. Inputs hold
+        numbers, every other row is a formula referencing them, so a new set gets typed in rather
+        than modelled again.</p></div>
+      </div>
+
+      <div class="media">
+        <pre class="code">for z3 = max_z3-40:1:max_z3 <span class="cm">%search for ring gears that are right near the max it can be</span>
+
+    if z3&gt;135 <span class="cm">%Don't let ring gear get too big for interpolation tables</span>
+        continue
+    end
+
+    for z1 = 12:1:20 <span class="cm">%search for sun gears right near minimum</span>
+        <span class="cm">⋮</span>
+        <span class="cm">%check if hunting ratio, nice to have</span>
+        gcd_mesh1 = gcd(z2,z1) == 1;
+        gcd_mesh2 = gcd(z3,z2p) == 1;
+        hunting_ratio = gcd_mesh1 &amp;&amp; gcd_mesh2;</pre>
+        <div class="caption"><p>What fed those numbers. The search itself was not mine. It was already sweeping every gear
+        combination against AGMA bending and contact limits, but slowly enough to be awkward to
+        iterate on. Feasible sets only ever land where the ring gear is near its package limit and
+        the sun near its minimum, so the sweep was bounded to that corner rather than the whole
+        space. The hunting-ratio check went in alongside it: coprime meshes let every tooth
+        eventually meet every other, so wear spreads instead of repeating the same pairings.</p></div>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- ========== 4 — ABORT SEQUENCING ========== -->
+  <article class="sheet rv">
+    <div class="spec">
+      <div class="row"><span class="k">Role</span><span class="v">Sole designer</span></div>
+      <div class="row"><span class="k">Timeline</span><span class="v">March 2026</span></div>
+      <div class="row"><span class="k">Where</span><span class="v">Gainesville, FL</span></div>
+      <div class="row"><span class="k">Tools</span><span class="v">Arduino IDE</span></div>
+      <div class="row"><span class="k">Status</span><span class="v">Validated in test</span></div>
+    </div>
+
+    <div class="body">
+      <h3>Autonomous abort sequencing — a five-state fail-safe controller</h3>
+      <p class="org">University of Florida</p>
+
+
+
+      <div class="media">
+        <img src="img/abort-fsm-bench.jpg" alt="The Arduino test bench: a breadboard carrying status LEDs, a buzzer, a potentiometer, an IR receiver and a joystick, wired to an Arduino board, with a micro servo, a DC fan, an IR remote and a stepper motor with its driver arranged around it.">
+        <div class="caption"><p>Built as the end-of-term project for an electrical engineering
+        class. A five-state machine, exercised on this bench by injecting the
+        lost-link, thermal and geofence faults it exists to catch, with all
+        eight subsystems logged.</p></div>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+</main>
+
+<footer class="wrap">
+  <div class="tblock rv">
+    <div class="cell">
+      <span class="k">Name</span>
+      <span class="v">Carson Chiumento</span>
+    </div>
+    <div class="cell">
+      <span class="k">Discipline</span>
+      <span class="v">Mechanical Eng.</span>
+    </div>
+    <div class="cell">
+      <span class="k">Graduating</span>
+      <span class="v">May 2028</span>
+    </div>
+    <div class="cell full">
+      <span class="k">LinkedIn</span>
+      <span class="v"><a href="https://www.linkedin.com/in/carson-chiumento/" target="_blank" rel="noopener noreferrer">linkedin.com/in/carson-chiumento</a></span>
+    </div>
+    <div class="cell full">
+      <span class="k">Sheet</span>
+      <span class="v">carsonchiumento.com &nbsp;·&nbsp; last updated <span id="rev">—</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Stamps the date this file was last changed. Nothing to edit.
+document.getElementById('rev').textContent =
+  new Date(document.lastModified).toLocaleDateString('en-US',
+    {year:'numeric',month:'short',day:'numeric'});
+
+// Fade sections in on scroll.
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
