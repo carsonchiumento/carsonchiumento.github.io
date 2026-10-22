@@ -54,7 +54,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:clip}
 body{
   background:var(--paper);
   color:var(--ink);
@@ -86,6 +86,54 @@ a{color:inherit}
   font-size:clamp(1.05rem,2.4vw,1.35rem);
   font-weight:600;letter-spacing:-.01em;
   color:var(--ink);
+}
+
+/* ---------- carousel rail ----------
+   One card centred, neighbours peeking either side. The rail is the scroll
+   container: a two-finger swipe is just horizontal overflow scrolling, and
+   scroll-snap parks each card in the middle. JS only decides which card counts
+   as centred so it can be un-dimmed. */
+.rail{
+  --cardw:min(920px,78vw);
+  display:flex;align-items:flex-start;
+  gap:clamp(1rem,3vw,2.5rem);
+  overflow-x:auto;overflow-y:visible;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  /* break out of .wrap so the peeking cards run to the window edges */
+  width:100vw;margin-left:calc(50% - 50vw);
+  padding:.5rem calc((100vw - var(--cardw))/2) 1.5rem;
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.rail::-webkit-scrollbar{display:none}
+.rail > .sheet{
+  flex:0 0 var(--cardw);width:var(--cardw);max-width:none;
+  margin-bottom:0;
+  scroll-snap-align:center;
+  opacity:.38;transform:scale(.975);
+  transition:opacity .35s ease,transform .35s ease;
+  cursor:pointer;
+}
+.rail > .sheet.active{opacity:1;transform:none;cursor:default}
+.railnav{
+  display:flex;align-items:center;justify-content:center;gap:1.1rem;
+  margin-top:.4rem;
+}
+.rbtn{
+  font:inherit;font-family:var(--mono);font-size:.95rem;line-height:1;
+  color:var(--ink);background:var(--sheet);
+  border:1px solid var(--rule);padding:.45rem .8rem;cursor:pointer;
+  transition:border-color .15s,color .15s;
+}
+.rbtn:hover:not(:disabled),.rbtn:focus-visible{border-color:var(--accent);color:var(--accent)}
+.rbtn:disabled{opacity:.35;cursor:default}
+.rcount{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;
+  color:var(--graphite);min-width:4ch;text-align:center;
+}
+@media (prefers-reduced-motion:reduce){
+  .rail{scroll-behavior:auto}
+  .rail > .sheet{transition:none}
 }
 
 /* ---------- project sheets ---------- */
@@ -225,8 +273,9 @@ footer{margin:var(--gap) 0 0}
 <main class="wrap">
 
 <section id="work">
+  <div class="rail" id="rail">
   <!-- ========== 1 — DYNAMOMETER ========== -->
-  <article class="sheet rv">
+  <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">Dynamometer &amp;<br>validation lead</span></div>
       <div class="row"><span class="k">Timeline</span><span class="v">Dec 2025 – Present</span></div>
@@ -311,7 +360,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
   </article>
 
   <!-- ========== 2 — DOCKING ROBOTICS ========== -->
-  <article class="sheet rv">
+  <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">Mechatronics<br>engineering intern</span></div>
       <div class="row"><span class="k">Timeline</span><span class="v">May 2026 – Present</span></div>
@@ -343,7 +392,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
   </article>
 
   <!-- ========== 3 — IN-HUB MOTOR ========== -->
-  <article class="sheet rv">
+  <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">In-hub motor<br>design engineer</span></div>
       <div class="row"><span class="k">Timeline</span><span class="v">Jan 2025 – Present</span></div>
@@ -391,7 +440,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
   </article>
 
   <!-- ========== 4 — MOTOR HOUSING SIMULATION ========== -->
-  <article class="sheet rv">
+  <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">In-hub motor<br>design engineer</span></div>
       <div class="row"><span class="k">Timeline</span><span class="v">Jan 2025 – Present</span></div>
@@ -416,7 +465,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
   </article>
 
   <!-- ========== 5 — ABORT SEQUENCING ========== -->
-  <article class="sheet rv">
+  <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">Sole designer</span></div>
       <div class="row"><span class="k">Timeline</span><span class="v">March 2026</span></div>
@@ -440,7 +489,13 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
       </div>
     </div>
   </article>
+  </div>
 
+  <div class="railnav">
+    <button class="rbtn" id="rprev" type="button" aria-label="Previous project">&larr;</button>
+    <span class="rcount"><span id="rnow">1</span> / <span id="rtot">5</span></span>
+    <button class="rbtn" id="rnext" type="button" aria-label="Next project">&rarr;</button>
+  </div>
 </section>
 
 </main>
@@ -467,6 +522,48 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
 </footer>
 
 <script>
+// Carousel: mark the card nearest the rail's centre as active, and let a click
+// on any other card bring it to the middle.
+(function(){
+  const rail = document.getElementById('rail');
+  if(!rail) return;
+  const cards = [...rail.querySelectorAll('.sheet')];
+  const now = document.getElementById('rnow');
+  const prev = document.getElementById('rprev'), next = document.getElementById('rnext');
+  document.getElementById('rtot').textContent = cards.length;
+  let i = 0, queued = false;
+
+  const centre = c => c.offsetLeft + c.offsetWidth/2 - rail.offsetWidth/2;
+  const go = n => { i = Math.max(0, Math.min(cards.length-1, n)); rail.scrollTo({left:centre(cards[i])}); };
+
+  function sync(){
+    queued = false;
+    const mid = rail.scrollLeft + rail.offsetWidth/2;
+    let best = 0, dist = Infinity;
+    cards.forEach((c,n)=>{ const d = Math.abs(c.offsetLeft + c.offsetWidth/2 - mid); if(d < dist){ dist = d; best = n; } });
+    i = best;
+    cards.forEach((c,n)=>c.classList.toggle('active', n===i));
+    now.textContent = i+1;
+    prev.disabled = i===0; next.disabled = i===cards.length-1;
+  }
+  rail.addEventListener('scroll', ()=>{ if(!queued){ queued = true; requestAnimationFrame(sync); } }, {passive:true});
+  window.addEventListener('resize', sync);
+
+  cards.forEach((c,n)=>c.addEventListener('click', e=>{
+    if(c.classList.contains('active')) return;   // leave the centred card interactive
+    e.preventDefault();                          // a click on a side card centres it
+    go(n);
+  }));
+  prev.addEventListener('click',()=>go(i-1));
+  next.addEventListener('click',()=>go(i+1));
+  rail.addEventListener('keydown', e=>{
+    if(e.key==='ArrowRight'){ e.preventDefault(); go(i+1); }
+    if(e.key==='ArrowLeft'){ e.preventDefault(); go(i-1); }
+  });
+  rail.tabIndex = 0;
+  sync();
+})();
+
 // Fade sections in on scroll.
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
