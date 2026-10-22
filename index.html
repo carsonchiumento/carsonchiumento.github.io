@@ -264,6 +264,14 @@ footer{margin:var(--gap) 0 0}
       </div>
 
       <div class="media">
+        <img src="img/motor-housing-thermal.jpg" alt="SolidWorks thermal study on the same housing ring: steady-state temperature plotted over the flange with convection loads shown as arrows on the outer faces, and a legend running from 120.4 to 126.9 degrees Celsius.">
+        <div class="caption"><p>Whatever temperature the housing settles at is what the surrounding
+        parts and seals have to tolerate, and it sets the thermal growth the structural case has to
+        absorb. Steady state lands between 120 and 127 degrees Celsius, hottest at the inner groove
+        where the heat goes in and coolest at the lugs that carry it back out.</p></div>
+      </div>
+
+      <div class="media">
         <pre class="code"><span class="cm">% --- System equivalent stiffness (series) ---</span>
 inv_k = (1/k_a1) + (1/k_c1) + (1/k_t) + (1/k_c2) + (1/k_a2);
 k_sys = 1 / inv_k;
@@ -393,7 +401,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     </div>
 
     <div class="body">
-      <h3>Thermal and structural validation of the in-hub motor housing</h3>
+      <h3>Structural validation of the in-hub motor housing</h3>
       <p class="org">Gator Motorsports — University of Florida</p>
 
       <div class="media">
@@ -404,13 +412,6 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
         near 0.12 mm.</p></div>
       </div>
 
-      <div class="media">
-        <img src="img/motor-housing-thermal.jpg" alt="SolidWorks thermal study on the same housing ring: steady-state temperature plotted over the flange with convection loads shown as arrows on the outer faces, and a legend running from 120.4 to 126.9 degrees Celsius.">
-        <div class="caption"><p>Whatever temperature the housing settles at is what the surrounding
-        parts and seals have to tolerate, and it sets the thermal growth the structural case has to
-        absorb. Steady state lands between 120 and 127 degrees Celsius, hottest at the inner groove
-        where the heat goes in and coolest at the lugs that carry it back out.</p></div>
-      </div>
     </div>
   </article>
 
