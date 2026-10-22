@@ -4,7 +4,6 @@
 <meta name="robots" content="noindex, nofollow">
 <title>A — deck</title>
 <style>body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
-.hero h1{}
 
   unless you want to change colors/fonts.
 
@@ -57,10 +56,14 @@
 
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad)}
+a{color:inherit}
+
 /* ---------- utility type ---------- */
 .mono{font-family:var(--mono)}
 
 /* ---------- hero ---------- */
+.hero{padding:clamp(2rem,6vw,4rem) 0 clamp(1.2rem,3vw,2rem)}
 .hero h1{
   font-size:clamp(2.1rem,7.5vw,4.6rem);
   font-weight:700;line-height:.92;letter-spacing:-.035em;
@@ -156,27 +159,6 @@ html{scroll-behavior:smooth}
   max-width:64ch;
 }
 
-/* ---------- title block (footer) ---------- */
-footer{margin:var(--gap) 0}
-.tblock{
-  border:2px solid var(--ink);
-  display:grid;grid-template-columns:2fr 1fr 1fr 2fr;
-  background:var(--sheet);
-}
-.tblock .cell{border-right:1px solid var(--rule);padding:.7rem .9rem}
-.tblock .cell:last-child{border-right:none}
-.tblock .cell.full{border-right:none}
-.tblock .k{
-  font-family:var(--mono);
-  font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--graphite);display:block;margin-bottom:.25rem;
-}
-.tblock .v{
-  font-family:var(--mono);
-  font-size:.82rem;word-break:break-word;
-}
-.tblock a{color:var(--accent)}
-
 /* ---------- responsive ---------- */
 @media (max-width:720px){
   .sheet{grid-template-columns:1fr}
@@ -184,8 +166,6 @@ footer{margin:var(--gap) 0}
     border-right:none;border-bottom:1px solid var(--rule);
     flex-direction:row;flex-wrap:wrap;gap:1.1rem 1.6rem;
   }
-  .tblock{grid-template-columns:1fr 1fr}
-  .tblock .cell{border-right:1px solid var(--rule)}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -199,10 +179,10 @@ footer{margin:var(--gap) 0}
 .tryswitch a{font-family:var(--mono);font-size:.68rem;color:#EDEEEF;text-decoration:none;
   padding:.3rem .7rem;border:1px solid #3A4249}
 .tryswitch a:hover{border-color:var(--accent);color:var(--accent)}
-body{padding-bottom:2.6rem}
+:root{--barh:2.6rem}
 
 html,body{height:100%}
-body{height:100dvh;display:flex;flex-direction:column;overflow:hidden;padding-bottom:2.6rem}
+body{height:100dvh;display:flex;flex-direction:column;overflow:hidden;padding-bottom:var(--barh)}
 .topbar{flex:none;display:flex;align-items:baseline;gap:1rem;padding:.9rem clamp(1rem,4vw,2.5rem);
   border-bottom:2px solid var(--ink)}
 .topbar .nm{font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
@@ -213,15 +193,14 @@ body{height:100dvh;display:flex;flex-direction:column;overflow:hidden;padding-bo
 .stage .sheet.on{display:grid}
 .stage .sheet .spec{overflow-y:auto}
 .stage .sheet .body{overflow-y:auto;overscroll-behavior:contain}
-.deckbar{flex:none;display:flex;gap:.4rem;justify-content:center;padding:0 0 .6rem}
-.dot{font:inherit;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;
-  background:var(--sheet);border:1px solid var(--rule);padding:.35rem .7rem;cursor:pointer;color:var(--graphite)}
+.deckbar{flex:none;display:flex;gap:.4rem;justify-content:center;padding:.2rem 0 .6rem}
+.dot{font:inherit;font-family:var(--mono);font-size:.62rem;background:var(--sheet);
+  border:1px solid var(--rule);padding:.35rem .7rem;cursor:pointer;color:var(--graphite)}
 .dot.on{border-color:var(--ink);color:var(--ink)}
 @media(max-width:720px){.stage .sheet.on{display:flex;flex-direction:column}.stage .sheet .spec{flex:none}}
 </style></head>
 <body>
-<header class="topbar"><span class="nm">Carson Chiumento</span>
-<span class="sub">Engineering Portfolio</span><span class="pos" id="pos">1 / 5</span></header>
+<header class="topbar"><span class="nm">Carson Chiumento</span><span class="sub">Engineering Portfolio</span><span class="pos" id="pos">1 / 5</span></header>
 <main class="stage">  <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">Dynamometer &amp;<br>validation lead</span></div>
@@ -435,8 +414,8 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
 const sh=[...document.querySelectorAll('.stage .sheet')],dots=[...document.querySelectorAll('.dot')],pos=document.getElementById('pos');
 let i=0;
 function show(n){i=(n+sh.length)%sh.length;
- sh.forEach((s,k)=>{s.classList.toggle('on',k===i); if(k===i){s.querySelector('.body').scrollTop=0;s.querySelector('.spec').scrollTop=0;}});
- dots.forEach((d,k)=>d.classList.toggle('on',k===i)); pos.textContent=(i+1)+' / '+sh.length;}
+ sh.forEach((s,k)=>{s.classList.toggle('on',k===i);if(k===i){s.querySelector('.body').scrollTop=0;s.querySelector('.spec').scrollTop=0;}});
+ dots.forEach((d,k)=>d.classList.toggle('on',k===i));pos.textContent=(i+1)+' / '+sh.length;}
 dots.forEach(d=>d.addEventListener('click',()=>show(+d.dataset.i)));
 addEventListener('keydown',e=>{if(e.key==='ArrowRight')show(i+1);if(e.key==='ArrowLeft')show(i-1);});
 show(0);
