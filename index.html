@@ -232,27 +232,6 @@ a{color:inherit}
   max-width:64ch;
 }
 
-/* ---------- title block (footer) ---------- */
-footer{flex:none;margin:0}
-.tblock{
-  border:2px solid var(--ink);
-  display:grid;grid-template-columns:2fr 1fr 1fr 2fr;
-  background:var(--sheet);
-}
-.tblock .cell{border-right:1px solid var(--rule);padding:.7rem .9rem}
-.tblock .cell:last-child{border-right:none}
-.tblock .cell.full{border-right:none}
-.tblock .k{
-  font-family:var(--mono);
-  font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--graphite);display:block;margin-bottom:.25rem;
-}
-.tblock .v{
-  font-family:var(--mono);
-  font-size:.82rem;word-break:break-word;
-}
-.tblock a{color:var(--accent)}
-
 /* ---------- responsive ---------- */
 @media (max-width:720px){
   .sheet{grid-template-columns:1fr}
@@ -260,8 +239,6 @@ footer{flex:none;margin:0}
     border-right:none;border-bottom:1px solid var(--rule);
     flex-direction:row;flex-wrap:wrap;gap:1.1rem 1.6rem;
   }
-  .tblock{grid-template-columns:1fr 1fr}
-  .tblock .cell{border-right:1px solid var(--rule)}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -509,26 +486,6 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
 
 </main>
 
-<footer class="wrap">
-  <div class="tblock">
-    <div class="cell">
-      <span class="k">Name</span>
-      <span class="v">Carson Chiumento</span>
-    </div>
-    <div class="cell">
-      <span class="k">Discipline</span>
-      <span class="v">Mechanical Eng.</span>
-    </div>
-    <div class="cell">
-      <span class="k">Graduating</span>
-      <span class="v">May 2028</span>
-    </div>
-    <div class="cell full">
-      <span class="k">LinkedIn</span>
-      <span class="v"><a href="https://www.linkedin.com/in/carson-chiumento/" target="_blank" rel="noopener noreferrer">linkedin.com/in/carson-chiumento</a></span>
-    </div>
-  </div>
-</footer>
 
 <script>
 // Carousel: mark the card nearest the rail's centre as active, and let a click
