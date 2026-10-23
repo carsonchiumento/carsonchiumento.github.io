@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <!--
   ============================================================
-  HOW TO EDIT THIS FILE
+  HOW THIS PAGE WORKS
   ============================================================
-  Change text between tags. Don't touch anything inside <style>
+  Five project cards in a horizontal deck. One is centred; its
+  neighbours peek, dimmed. Click a peeking card or a chapter tab to
+  centre it, or two-finger swipe sideways. The page itself never
+  scrolls; only the centred card scrolls, and its contents sit on a
+  shallow cylinder as they move.
+
+  TO ADD A PROJECT: copy one whole project card, paste it after the
+  last one, then add a matching chapter tab in <nav class="chapters">
+  with the next data-i number.
+
+  TO ADD IMAGES: drop the file into img/ next to this file and copy an
+  existing img tag inside a div.media. Keep names lowercase with no
+  spaces: GitHub Pages is case-sensitive even though macOS is not.
+  ============================================================
+-->
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Carson Chiumento — Mechanical Engineer</title>
+<meta name="description" content="Mechanical engineering portfolio of Carson Chiumento — University of Florida B.S. 2028. Robotics hardware, dynamometer design, FEA, and manufacturing.">
+<style>body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
   unless you want to change colors/fonts.
 
   TO ADD A PROJECT: copy one whole project card and paste
@@ -54,22 +75,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;height:100%;overflow:hidden}
-/* The page itself never scrolls. body is a fixed-height column: hero, rail,
-   footer. Only the centred card scrolls, inside itself. */
-body{
-  background:var(--paper);
-  color:var(--ink);
-  font-family:var(--sans);
-  font-size:17px;
-  line-height:1.55;
-  -webkit-font-smoothing:antialiased;
-  height:100dvh;
-  display:flex;flex-direction:column;
-  overflow:hidden;
-}
-main.wrap{flex:1;min-height:0;display:flex;flex-direction:column}
-#work{flex:1;min-height:0;display:flex;flex-direction:column}
+html{scroll-behavior:smooth}
 .wrap{max-width:1080px;margin:0 auto;padding:0 var(--pad)}
 a{color:inherit}
 
@@ -77,14 +83,6 @@ a{color:inherit}
 .mono{font-family:var(--mono)}
 
 /* ---------- hero ---------- */
-.hero{
-  flex:none;overflow:hidden;
-  padding:clamp(2rem,6vw,4rem) 0 clamp(1.2rem,3vw,2rem);
-  max-height:60vh;
-  transition:max-height .45s ease,opacity .3s ease,padding .45s ease;
-}
-/* set once the centred card is scrolled off its top */
-.hero.shrunk{max-height:0;opacity:0;padding-top:0;padding-bottom:0}
 .hero h1{
   font-size:clamp(2.1rem,7.5vw,4.6rem);
   font-weight:700;line-height:.92;letter-spacing:-.035em;
@@ -97,58 +95,6 @@ a{color:inherit}
   font-size:clamp(.95rem,2vw,1.15rem);
   font-weight:600;letter-spacing:-.01em;
   color:var(--ink);
-}
-
-/* ---------- carousel rail ----------
-   One card centred, neighbours peeking either side. The rail is the scroll
-   container: a two-finger swipe is just horizontal overflow scrolling, and
-   scroll-snap parks each card in the middle. JS only decides which card counts
-   as centred so it can be un-dimmed. */
-.rail{
-  --cardw:min(920px,78vw);
-  flex:1;min-height:0;
-  display:flex;align-items:stretch;
-  gap:clamp(1rem,3vw,2.5rem);
-  overflow-x:auto;overflow-y:visible;
-  scroll-snap-type:x mandatory;
-  scroll-behavior:smooth;
-  /* break out of .wrap so the peeking cards run to the window edges */
-  width:100vw;margin-left:calc(50% - 50vw);
-  padding:.25rem calc((100vw - var(--cardw))/2) .75rem;
-  scrollbar-width:none;-ms-overflow-style:none;
-}
-.rail::-webkit-scrollbar{display:none}
-.rail > .sheet{
-  flex:0 0 var(--cardw);width:var(--cardw);max-width:none;
-  margin-bottom:0;
-  height:100%;
-  overflow-y:auto;overscroll-behavior:contain;
-  scrollbar-width:thin;
-  scroll-snap-align:center;
-  opacity:.38;transform:scale(.975);
-  transition:opacity .35s ease,transform .35s ease;
-  cursor:pointer;
-}
-.rail > .sheet.active{opacity:1;transform:none;cursor:default}
-.railnav{
-  display:flex;align-items:center;justify-content:center;gap:1.1rem;
-  margin-top:.4rem;
-}
-.rbtn{
-  font:inherit;font-family:var(--mono);font-size:.95rem;line-height:1;
-  color:var(--ink);background:var(--sheet);
-  border:1px solid var(--rule);padding:.45rem .8rem;cursor:pointer;
-  transition:border-color .15s,color .15s;
-}
-.rbtn:hover:not(:disabled),.rbtn:focus-visible{border-color:var(--accent);color:var(--accent)}
-.rbtn:disabled{opacity:.35;cursor:default}
-.rcount{
-  font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;
-  color:var(--graphite);min-width:4ch;text-align:center;
-}
-@media (prefers-reduced-motion:reduce){
-  .rail{scroll-behavior:auto}
-  .rail > .sheet{transition:none}
 }
 
 /* ---------- project sheets ---------- */
@@ -244,24 +190,78 @@ a{color:inherit}
   html{scroll-behavior:auto}
 }
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-</style>
-</head>
 
+html,body{height:100%}
+body{height:100dvh;display:flex;flex-direction:column;overflow:hidden;
+  background:var(--paper)}
+
+/* the name floats above the deck and slides away as you read */
+.float{flex:none;padding:1rem clamp(1rem,4vw,2.5rem) .2rem;
+  transform-origin:left top;will-change:transform,opacity}
+.float .nm{font-size:1.35rem;font-weight:700;letter-spacing:-.015em;line-height:1}
+.float .sub{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--graphite);margin-top:.25rem}
+
+.chapters{flex:none;display:flex;gap:.3rem;flex-wrap:wrap;
+  padding:.5rem clamp(1rem,4vw,2.5rem) .55rem}
+.ch{font:inherit;font-family:var(--mono);font-size:.66rem;cursor:pointer;background:none;
+  border:1px solid transparent;padding:.35rem .6rem;color:var(--graphite);display:flex;gap:.45rem;align-items:baseline}
+.ch .n{font-size:.54rem;letter-spacing:.1em;color:var(--rule)}
+.ch:hover{color:var(--ink)}
+.ch.on{border-color:var(--rule);background:var(--sheet);color:var(--ink)}
+.ch.on .n{color:var(--accent)}
+
+/* the deck: one card centred, the next peeking at the right edge */
+.deck{
+  --cardw:min(880px,74vw);
+  flex:1;min-height:0;display:flex;align-items:stretch;gap:clamp(1rem,2.5vw,2rem);
+  overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  padding:.2rem calc((100vw - var(--cardw))/2) .6rem;
+  scrollbar-width:none;
+}
+.deck::-webkit-scrollbar{display:none}
+.deck > .sheet{
+  flex:0 0 var(--cardw);width:var(--cardw);max-width:none;margin:0;height:100%;
+  scroll-snap-align:center;
+  overflow-y:auto;overscroll-behavior:contain;
+  opacity:.4;transition:opacity .35s ease;cursor:pointer;
+}
+.deck > .sheet.active{opacity:1;cursor:default}
+/* the cylinder. perspective must sit on the direct parent of the rotated
+   blocks, otherwise rotateX renders as a flat vertical squash. */
+.deck > .sheet .body,.deck > .sheet .spec{perspective:850px;perspective-origin:50% 45%}
+.deck > .sheet .body > *,.deck > .sheet .spec .row{will-change:transform;transform-origin:50% 50%}
+
+.intro{max-width:70ch;margin:.2rem 0 1.4rem}
+.what{font-size:1.05rem;line-height:1.5;color:var(--ink)}
+.didk,.figk{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--graphite);margin:1.3rem 0 .5rem}
+.figk{border-top:2px solid var(--ink);padding-top:.6rem;margin-top:1.8rem}
+.did{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.did li{position:relative;padding-left:1.1rem;font-size:.95rem;line-height:1.5;color:#2C3238}
+.did li::before{content:"";position:absolute;left:0;top:.62em;width:.5rem;height:1px;background:var(--accent)}
+.foot{flex:none;display:flex;justify-content:space-between;align-items:center;
+  padding:0 clamp(1rem,4vw,2.5rem) .5rem;font-family:var(--mono);font-size:.66rem;color:var(--graphite)}
+.foot button{font:inherit;background:var(--sheet);border:1px solid var(--rule);
+  padding:.3rem .65rem;cursor:pointer;color:var(--ink)}
+.foot button:disabled{opacity:.35;cursor:default}
+
+
+@media(max-width:720px){
+  .deck{--cardw:88vw}
+  .deck > .sheet{display:flex;flex-direction:column}
+  .deck > .sheet .spec{flex:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .deck{scroll-behavior:auto}
+  .deck > .sheet .body > *,.deck > .sheet .spec .row{transform:none !important}
+  .float{transform:none !important}
+}
+</style></head>
 <body>
-
-<header class="hero">
-  <div class="wrap">
-    <h1><span>Carson</span><span class="lastname">Chiumento</span></h1>
-    <p class="subtitle">Engineering Portfolio</p>
-  </div>
-</header>
-
-<main class="wrap">
-
-<section id="work">
-  <div class="rail" id="rail">
-  <!-- ========== 1 — DYNAMOMETER ========== -->
-  <article class="sheet">
+<header class="float" id="float"><div class="nm">Carson Chiumento</div><div class="sub">Engineering Portfolio</div></header>
+<nav class="chapters"><button class="ch" data-i="0"><span class="n">01</span>Dynamometer</button><button class="ch" data-i="1"><span class="n">02</span>Drone & dock</button><button class="ch" data-i="2"><span class="n">03</span>Gear set</button><button class="ch" data-i="3"><span class="n">04</span>Housing</button><button class="ch" data-i="4"><span class="n">05</span>Abort controller</button></nav>
+<main class="deck" id="deck">  <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">Dynamometer &amp;<br>validation lead</span></div>
       <div class="row"><span class="k">Timeline</span><span class="v">Dec 2025 – Present</span></div>
@@ -273,9 +273,7 @@ a{color:inherit}
     <div class="body">
       <h3>Regenerative dynamometer for in-hub motor testing</h3>
       <p class="org">Gator Motorsports — University of Florida</p>
-
-
-
+<div class="intro"><p class="what">A test stand for in-hub motors. Two motors face each other through a single torque transducer, so one drives while the other loads it and the energy recirculates instead of being burned off in a brake.</p><p class="didk">What I did</p><ul class="did"><li>Sized the stand and laid out the back-to-back architecture.</li><li>Moved the adapter plate from aluminium to steel, then ran a design study to settle its diameter and thickness.</li><li>Verified the plate to a 2x safety factor at 500 N·m in ANSYS, and ran the thermal case.</li><li>Extended a MATLAB solver to rank whole driveline builds by first natural frequency, so components were chosen together rather than one at a time.</li></ul></div><p class="figk">The work</p>
       <div class="media">
         <img src="img/dyno-assembly.jpg" alt="SolidWorks render of the dynamometer: two in-hub motor assemblies mounted back-to-back on triangular pedestal brackets bolted to a baseplate, joined by two couplings with an in-line torque transducer between them.">
         <div class="caption"><p>The stand the rest of this work sizes. Facing two in-hub motors
@@ -344,8 +342,6 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
       </div>
     </div>
   </article>
-
-  <!-- ========== 2 — DOCKING ROBOTICS ========== -->
   <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">Mechatronics<br>engineering intern</span></div>
@@ -358,9 +354,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     <div class="body">
       <h3>Aerial &amp; ground platform redesign</h3>
       <p class="org">Docking Robotics</p>
-
-
-
+<div class="intro"><p class="what">An aerial platform and the ground platform it lands on. The two have to dock reliably, which constrains both the airframe and the cradle that receives it.</p><p class="didk">What I did</p><ul class="did"><li>Redesigned the motor arms: longer, to push the props away from the centre of mass for stability.</li><li>Raised them so the camera module stops blocking lift and gets the clearance it needs.</li><li>Tuned infill and cutout pattern together for strength-to-weight, since the arms are 3D printed.</li><li>Designed the landing cradle that lets the aerial platform dock with the ground platform.</li></ul></div><p class="figk">The work</p>
       <div class="media">
         <img src="img/docking-motor-arm.png" alt="SolidWorks render of the redesigned drone motor arm: an olive-coloured arm with rows of lightening slots along its web and a triangulated truss at the root, bolted through a grey plate to a red baseplate.">
         <div class="caption"><p>Longer arms carry the props further from the centre of mass for
@@ -376,8 +370,6 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
       </div>
     </div>
   </article>
-
-  <!-- ========== 3 — IN-HUB MOTOR ========== -->
   <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">In-hub motor<br>design engineer</span></div>
@@ -390,9 +382,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     <div class="body">
       <h3>Parametric modeling of the in-hub gear set</h3>
       <p class="org">Gator Motorsports — University of Florida</p>
-
-
-
+<div class="intro"><p class="what">The planetary gear set inside the in-hub motor. Tooth counts kept moving while the set was being sized, so the model had to be re-driven rather than redrawn each time.</p><p class="didk">What I did</p><ul class="did"><li>Built the gear geometry in Siemens NX as an expression-driven model: inputs hold numbers, everything else is a formula.</li><li>Took over an existing MATLAB gear search and bounded it to the corner where feasible sets actually land, which made it quick enough to iterate on.</li><li>Added a hunting-ratio check, so wear spreads across every tooth instead of repeating the same pairings.</li></ul></div><p class="figk">The work</p>
       <div class="media">
         <img src="img/nx-gear-expressions.png" alt="Siemens NX Part Navigator showing the User Expressions list that drives a parametric gear profile, with module, tooth number and pressure angle as inputs, beside the generated tooth geometry in the viewport.">
         <div class="caption"><p>The tooth counts were still moving while the set was being sized, and a
@@ -424,8 +414,6 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
 
     </div>
   </article>
-
-  <!-- ========== 4 — MOTOR HOUSING SIMULATION ========== -->
   <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">In-hub motor<br>design engineer</span></div>
@@ -438,6 +426,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     <div class="body">
       <h3>Structural validation of the in-hub motor housing</h3>
       <p class="org">Gator Motorsports — University of Florida</p>
+<div class="intro"><p class="what">The in-hub motor housing, checked in SolidWorks Simulation before committing to it.</p><p class="didk">What I did</p><ul class="did"><li>Ran the static case on displacement rather than stress, since it is stiffness that keeps the bore and sealing faces true.</li><li>Peak movement came out at 0.20 mm, out at the mounting lugs.</li></ul></div><p class="figk">The work</p>
 
       <div class="media">
         <img src="img/motor-housing-static.jpg" alt="SolidWorks static study on the motor housing ring: resultant displacement plotted over the eight-lug flange and its stepped inner bore, with a URES legend running from 0.1246 mm to 0.2005 mm.">
@@ -449,8 +438,6 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
 
     </div>
   </article>
-
-  <!-- ========== 5 — ABORT SEQUENCING ========== -->
   <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">Sole designer</span></div>
@@ -463,9 +450,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     <div class="body">
       <h3>Autonomous abort sequencing — a five-state fail-safe controller</h3>
       <p class="org">University of Florida</p>
-
-
-
+<div class="intro"><p class="what">A five-state fail-safe controller for an autonomous vehicle, built as the end-of-term project for an electrical engineering class.</p><p class="didk">What I did</p><ul class="did"><li>Wrote the five-state machine and the abort sequencing it drives.</li><li>Exercised it on a bench by injecting the lost-link, thermal and geofence faults it exists to catch.</li><li>Logged all eight subsystems through the sequence.</li></ul></div><p class="figk">The work</p>
       <div class="media">
         <img src="img/abort-fsm-bench.jpg" alt="The Arduino test bench: a breadboard carrying status LEDs, a buzzer, a potentiometer, an IR receiver and a joystick, wired to an Arduino board, with a micro servo, a DC fan, an IR remote and a stepper motor with its driver arranged around it.">
         <div class="caption"><p>Built as the end-of-term project for an electrical engineering
@@ -475,70 +460,66 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
       </div>
     </div>
   </article>
-  </div>
-
-  <div class="railnav">
-    <button class="rbtn" id="rprev" type="button" aria-label="Previous project">&larr;</button>
-    <span class="rcount"><span id="rnow">1</span> / <span id="rtot">5</span></span>
-    <button class="rbtn" id="rnext" type="button" aria-label="Next project">&rarr;</button>
-  </div>
-</section>
-
 </main>
-
-
+<div class="foot"><button id="pv">&larr;</button><span id="where"></span><button id="nx">&rarr;</button></div>
 <script>
-// Carousel: mark the card nearest the rail's centre as active, and let a click
-// on any other card bring it to the middle.
-(function(){
-  const rail = document.getElementById('rail');
-  if(!rail) return;
-  const cards = [...rail.querySelectorAll('.sheet')];
-  const now = document.getElementById('rnow');
-  const prev = document.getElementById('rprev'), next = document.getElementById('rnext');
-  document.getElementById('rtot').textContent = cards.length;
-  let i = 0, queued = false;
+const deck=document.getElementById('deck'),cards=[...deck.querySelectorAll('.sheet')];
+const tabs=[...document.querySelectorAll('.ch')],where=document.getElementById('where');
+const pv=document.getElementById('pv'),nx=document.getElementById('nx'),float_=document.getElementById('float');
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let i=0,qh=false,qv=false;
 
-  const centre = c => c.offsetLeft + c.offsetWidth/2 - rail.offsetWidth/2;
-  const go = n => { i = Math.max(0, Math.min(cards.length-1, n)); rail.scrollTo({left:centre(cards[i])}); };
+const centre=c=>c.offsetLeft+c.offsetWidth/2-deck.offsetWidth/2;
+const go=n=>deck.scrollTo({left:centre(cards[Math.max(0,Math.min(cards.length-1,n))])});
 
-  function sync(){
-    queued = false;
-    const mid = rail.scrollLeft + rail.offsetWidth/2;
-    let best = 0, dist = Infinity;
-    cards.forEach((c,n)=>{ const d = Math.abs(c.offsetLeft + c.offsetWidth/2 - mid); if(d < dist){ dist = d; best = n; } });
-    if(best !== i){
-      cards[i].scrollTop = 0;   // the card you leave rewinds...
-      cards[best].scrollTop = 0; // ...and you always arrive at the top of the next one
-      hero.classList.remove('shrunk');
-    }
-    i = best;
-    cards.forEach((c,n)=>c.classList.toggle('active', n===i));
-    now.textContent = i+1;
-    prev.disabled = i===0; next.disabled = i===cards.length-1;
-  }
-  const hero = document.querySelector('.hero');
-  const heroSync = () => hero.classList.toggle('shrunk', cards[i].scrollTop > 24);
-  cards.forEach(c => c.addEventListener('scroll', heroSync, {passive:true}));
-
-  rail.addEventListener('scroll', ()=>{ if(!queued){ queued = true; requestAnimationFrame(sync); } }, {passive:true});
-  window.addEventListener('resize', sync);
-
-  cards.forEach((c,n)=>c.addEventListener('click', e=>{
-    if(c.classList.contains('active')) return;   // leave the centred card interactive
-    e.preventDefault();                          // a click on a side card centres it
-    go(n);
-  }));
-  prev.addEventListener('click',()=>go(i-1));
-  next.addEventListener('click',()=>go(i+1));
-  rail.addEventListener('keydown', e=>{
-    if(e.key==='ArrowRight'){ e.preventDefault(); go(i+1); }
-    if(e.key==='ArrowLeft'){ e.preventDefault(); go(i-1); }
+/* each block sits on a shallow cylinder: tilt and depth follow its distance
+   from the card's middle. Only the active card is worth the work. */
+function curve(card){
+  if(reduce) return;
+  const r=card.getBoundingClientRect(),mid=r.top+r.height/2,h=r.height;
+  card.querySelectorAll('.body > *, .spec .row').forEach(el=>{
+    const b=el.getBoundingClientRect();
+    const t=Math.max(-1,Math.min(1,((b.top+b.height/2)-mid)/(h*0.72)));
+    /* a drum: blocks rotate away and sink back as they leave the middle */
+    const a=Math.abs(t);
+    el.style.transform='rotateX('+(-t*20).toFixed(2)+'deg) translateZ('+(-a*a*120-a*30).toFixed(1)+'px)';
+    el.style.opacity=(1-a*0.4).toFixed(3);
   });
-  rail.tabIndex = 0;
-  sync();
-})();
-</script>
+}
+function vsync(){qv=false;curve(cards[i]);
+  const s=cards[i].scrollTop,k=Math.min(1,s/120);
+  float_.style.transform='translateY('+(-k*34).toFixed(1)+'px)';
+  float_.style.opacity=(1-k*0.85).toFixed(3);}
 
-</body>
-</html>
+function hsync(){
+  qh=false;
+  const mid=deck.scrollLeft+deck.offsetWidth/2;
+  let best=0,dist=Infinity;
+  cards.forEach((c,n)=>{const d=Math.abs(c.offsetLeft+c.offsetWidth/2-mid);if(d<dist){dist=d;best=n;}});
+  if(best!==i) cards[best].scrollTop=0;   // arrive at the top of the new card
+  i=best;
+  cards.forEach((c,n)=>c.classList.toggle('active',n===i));
+  tabs.forEach((t,n)=>t.classList.toggle('on',n===i));
+  where.textContent=(i+1)+' of '+cards.length+'  ·  '+tabs[i].textContent.replace(/^\d+/,'').trim();
+  pv.disabled=i===0;nx.disabled=i===cards.length-1;
+  vsync();
+}
+/* Rewind the cards you are not on, but only once the deck has stopped moving:
+   writing scrollTop mid-animation cancels the smooth horizontal scroll. */
+let settle;
+deck.addEventListener('scroll',()=>{
+  if(!qh){qh=true;requestAnimationFrame(hsync);}
+  clearTimeout(settle);
+  settle=setTimeout(()=>cards.forEach((c,n)=>{if(n!==i)c.scrollTop=0;}),180);
+},{passive:true});
+cards.forEach((c,n)=>{
+  c.addEventListener('scroll',()=>{if(!qv&&n===i){qv=true;requestAnimationFrame(vsync);}},{passive:true});
+  c.addEventListener('click',e=>{if(!c.classList.contains('active')){e.preventDefault();go(n);}});
+});
+tabs.forEach(t=>t.addEventListener('click',()=>go(+t.dataset.i)));
+pv.onclick=()=>go(i-1);nx.onclick=()=>go(i+1);
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(i+1);if(e.key==='ArrowLeft')go(i-1);});
+addEventListener('resize',hsync);
+hsync();
+</script>
+</body></html>
