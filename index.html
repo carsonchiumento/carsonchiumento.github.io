@@ -260,7 +260,7 @@ body{height:100dvh;display:flex;flex-direction:column;overflow:hidden;
 </style></head>
 <body>
 <header class="float" id="float"><div class="nm">Carson Chiumento</div><div class="sub">Engineering Portfolio</div></header>
-<nav class="chapters"><button class="ch" data-i="0"><span class="n">01</span>Dynamometer</button><button class="ch" data-i="1"><span class="n">02</span>Drone & dock</button><button class="ch" data-i="2"><span class="n">03</span>Gear set</button><button class="ch" data-i="3"><span class="n">04</span>Housing</button><button class="ch" data-i="4"><span class="n">05</span>Abort controller</button></nav>
+<nav class="chapters"><button class="ch" data-i="0"><span class="n">01</span>Dynamometer</button><button class="ch" data-i="1"><span class="n">02</span>Drone & dock</button><button class="ch" data-i="2"><span class="n">03</span>Gear set</button><button class="ch" data-i="3"><span class="n">04</span>Abort controller</button></nav>
 <main class="deck" id="deck">  <article class="sheet">
     <div class="spec">
       <div class="row"><span class="k">Role</span><span class="v">Dynamometer &amp;<br>validation lead</span></div>
@@ -273,7 +273,7 @@ body{height:100dvh;display:flex;flex-direction:column;overflow:hidden;
     <div class="body">
       <h3>Regenerative dynamometer for in-hub motor testing</h3>
       <p class="org">Gator Motorsports — University of Florida</p>
-<div class="intro"><p class="what">A test stand for in-hub motors. Two motors face each other through a single torque transducer, so one drives while the other loads it and the energy recirculates instead of being burned off in a brake.</p><p class="didk">What I did</p><ul class="did"><li>Sized the stand and laid out the back-to-back architecture.</li><li>Moved the adapter plate from aluminium to steel, then ran a design study to settle its diameter and thickness.</li><li>Verified the plate to a 2x safety factor at 500 N·m in ANSYS, and ran the thermal case.</li><li>Extended a MATLAB solver to rank whole driveline builds by first natural frequency, so components were chosen together rather than one at a time.</li></ul></div><p class="figk">The work</p>
+<div class="intro"><p class="what">A test stand for in-hub motors. Two motors face each other through a single torque transducer, so one drives while the other loads it and the energy recirculates instead of being burned off in a brake.</p><p class="didk">What I did</p><ul class="did"><li>Sized the stand and laid out the back-to-back architecture.</li><li>Moved the adapter plate from aluminium to steel, then ran a design study to settle its diameter and thickness.</li><li>Verified the plate to a 2x safety factor at 500 N·m in ANSYS.</li><li>Ran the thermal and static studies on the housing in SolidWorks Simulation.</li><li>Extended a MATLAB solver to rank whole driveline builds by first natural frequency, so components were chosen together rather than one at a time.</li></ul></div><p class="figk">The work</p>
       <div class="media">
         <img src="img/dyno-assembly.jpg" alt="SolidWorks render of the dynamometer: two in-hub motor assemblies mounted back-to-back on triangular pedestal brackets bolted to a baseplate, joined by two couplings with an in-line torque transducer between them.">
         <div class="caption"><p>The stand the rest of this work sizes. Facing two in-hub motors
@@ -302,6 +302,14 @@ body{height:100dvh;display:flex;flex-direction:column;overflow:hidden;
         parts and seals have to tolerate, and it sets the thermal growth the structural case has to
         absorb. Steady state lands between 120 and 127 degrees Celsius, hottest at the inner groove
         where the heat goes in and coolest at the lugs that carry it back out.</p></div>
+      </div>
+
+      <div class="media">
+        <img src="img/motor-housing-static.jpg" alt="SolidWorks static study on the motor housing ring: resultant displacement plotted over the eight-lug flange and its stepped inner bore, with a URES legend running from 0.1246 mm to 0.2005 mm.">
+        <div class="caption"><p>Stiffness, not strength, is what decides whether the bore and the
+        sealing faces stay true once the motor is loaded, so the study was read on displacement.
+        Peak movement is 0.20 mm and it sits out at the mounting lugs, while the inner land holds
+        near 0.12 mm.</p></div>
       </div>
 
       <div class="media">
@@ -410,30 +418,6 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
         the sun near its minimum, so the sweep was bounded to that corner rather than the whole
         space. The hunting-ratio check went in alongside it: coprime meshes let every tooth
         eventually meet every other, so wear spreads instead of repeating the same pairings.</p></div>
-      </div>
-
-    </div>
-  </article>
-  <article class="sheet">
-    <div class="spec">
-      <div class="row"><span class="k">Role</span><span class="v">In-hub motor<br>design engineer</span></div>
-      <div class="row"><span class="k">Timeline</span><span class="v">Jan 2025 – Present</span></div>
-      <div class="row"><span class="k">Where</span><span class="v">Gainesville, FL</span></div>
-      <div class="row"><span class="k">Tools</span><span class="v">SolidWorks<br>Simulation</span></div>
-      <div class="row"><span class="k">Status</span><span class="v">Validated in simulation</span></div>
-    </div>
-
-    <div class="body">
-      <h3>Structural validation of the in-hub motor housing</h3>
-      <p class="org">Gator Motorsports — University of Florida</p>
-<div class="intro"><p class="what">The in-hub motor housing, checked in SolidWorks Simulation before committing to it.</p><p class="didk">What I did</p><ul class="did"><li>Ran the static case on displacement rather than stress, since it is stiffness that keeps the bore and sealing faces true.</li><li>Peak movement came out at 0.20 mm, out at the mounting lugs.</li></ul></div><p class="figk">The work</p>
-
-      <div class="media">
-        <img src="img/motor-housing-static.jpg" alt="SolidWorks static study on the motor housing ring: resultant displacement plotted over the eight-lug flange and its stepped inner bore, with a URES legend running from 0.1246 mm to 0.2005 mm.">
-        <div class="caption"><p>Stiffness, not strength, is what decides whether the bore and the
-        sealing faces stay true once the motor is loaded, so the study was read on displacement.
-        Peak movement is 0.20 mm and it sits out at the mounting lugs, while the inner land holds
-        near 0.12 mm.</p></div>
       </div>
 
     </div>
