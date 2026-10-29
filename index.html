@@ -35,9 +35,6 @@ nav.bar button.on{opacity:1;font-weight:500}
   margin:0;transform-origin:50% 50%;border-radius:22px;overflow:hidden;background:var(--pap);
   box-shadow:0 2px 6px rgba(0,0,0,.07),0 30px 70px -30px rgba(0,0,0,.45);
   transition:opacity .5s ease;backface-visibility:hidden}
-.card.dark{background:#000;color:#F5F5F7}
-.card.dark .cap{color:#A1A1A6}
-.card.dark .slab{background:#1D1D1F}
 .card:not(.on){cursor:pointer}
 .inner{height:100%;overflow-y:auto;overscroll-behavior:contain;overflow-anchor:none;
   padding:clamp(1.8rem,4vw,3.2rem)}
@@ -55,7 +52,6 @@ nav.bar button.on{opacity:1;font-weight:500}
   padding-top:clamp(2rem,4vw,3.2rem)}
 .blocks > .block + .block{border-top:1px solid var(--line);
   padding-top:clamp(2rem,4vw,3.2rem)}
-.card.dark .blocks,.card.dark .blocks > .block + .block{border-color:#2A2A2C}
 .slab{border-radius:16px;background:var(--grey);padding:clamp(.9rem,2vw,1.4rem);overflow:hidden}
 pre.code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.7rem;line-height:1.7;white-space:pre;overflow-x:auto}
 .code .cm{opacity:.55}
@@ -63,7 +59,6 @@ pre.code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.7re
 .dwrap{overflow-x:auto}
 table.dtable{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.68rem}
 .dtable th,.dtable td{padding:.4rem .55rem;white-space:nowrap;text-align:right;border-bottom:1px solid rgba(0,0,0,.08)}
-.card.dark .dtable th,.card.dark .dtable td{border-color:rgba(255,255,255,.12)}
 .dtable th:nth-child(-n+4),.dtable td:nth-child(-n+4){text-align:left}
 .dtable th{font-weight:500;font-size:.62rem;color:var(--mut)}
 .dtable tr.pick td{font-weight:600}
@@ -114,7 +109,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     
     
   </div>
-</article><article class="card dark" data-i="1">
+</article><article class="card" data-i="1">
   <div class="inner">
     <header class="top"><h2>Docking Robotics</h2><p class="tag">Longer arms. Clearer view. Lands itself.</p></header>
     <div class="shot lead"><img src="img/docking-motor-arm.png" alt="SolidWorks render of the redesigned drone motor arm: an olive-coloured arm with rows of lightening slots along its web and a triangulated truss at the root, bolted through a grey plate to a red baseplate."></div><p class="cap">The redesigned motor arm: longer, raised, and 3D printed.</p>
@@ -143,7 +138,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     
     
   </div>
-</article><article class="card dark" data-i="3">
+</article><article class="card" data-i="3">
   <div class="inner">
     <header class="top"><h2>Personal Project</h2><p class="tag">Built it because I wanted to.</p></header>
     <div class="shot lead"><img src="img/abort-fsm-bench.jpg" alt="The Arduino test bench: a breadboard carrying status LEDs, a buzzer, a potentiometer, an IR receiver and a joystick, wired to an Arduino board, with a micro servo, a DC fan, an IR remote and a stepper motor with its driver arranged around it."></div><p class="cap">The bench the five-state controller was exercised on, by injecting the faults it exists to catch.</p>
