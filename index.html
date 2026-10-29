@@ -19,16 +19,37 @@ body{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;background:va
 img{max-width:100%;display:block}
 a{color:var(--blue);text-decoration:none}
 
-nav.bar{flex:none;height:42px;display:flex;align-items:center;justify-content:center;gap:2.2rem;
-  background:rgba(251,251,253,.94);border-bottom:1px solid rgba(0,0,0,.07);z-index:10}
-nav.bar .me{font-size:14px;font-weight:600}
-nav.bar button{font:inherit;font-size:12px;background:none;border:0;color:var(--ink);opacity:.5;cursor:pointer;padding:3px 2px}
-nav.bar button:hover{opacity:.9}
-nav.bar button.on{opacity:1;font-weight:500}
+/* Both menus float clear of the cards, which pass underneath them. The glass is
+   a translucent fill plus a blur of whatever is behind; the white hairline and the
+   inner top highlight are what actually read as a lens edge. */
+nav.bar{position:fixed;left:50%;translate:-50% 0;z-index:20;display:flex;align-items:center;
+  border-radius:999px;background:rgba(251,251,253,.58);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  border:1px solid rgba(255,255,255,.6);
+  box-shadow:0 1px 1px rgba(0,0,0,.04),0 10px 30px -10px rgba(0,0,0,.28),
+             inset 0 1px 0 rgba(255,255,255,.75)}
+nav.top{top:14px;gap:1.9rem;padding:.46rem 1.25rem}
+nav.top .me{font-size:13px;font-weight:600;letter-spacing:-.01em}
+nav.top button{font:inherit;font-size:12px;background:none;border:0;color:var(--ink);
+  opacity:.5;cursor:pointer;padding:3px 2px}
+nav.top button:hover{opacity:.85}
+nav.top button.on{opacity:1;font-weight:500}
+
+/* The selector. A single lozenge slides to whichever name is current. */
+nav.pickbar{bottom:18px;padding:.34rem;gap:.1rem}
+nav.pickbar button{position:relative;z-index:1;font:inherit;font-size:12px;background:none;border:0;
+  color:var(--ink);opacity:.55;cursor:pointer;padding:.42rem .9rem;border-radius:999px;
+  white-space:nowrap;transition:opacity .3s ease}
+nav.pickbar button:hover{opacity:.85}
+nav.pickbar button.on{opacity:1;font-weight:500}
+nav.pickbar .pick{position:absolute;top:.34rem;bottom:.34rem;left:0;width:0;border-radius:999px;
+  background:rgba(255,255,255,.92);pointer-events:none;
+  box-shadow:0 1px 3px rgba(0,0,0,.16),0 0 0 .5px rgba(0,0,0,.05);
+  transition:translate .45s cubic-bezier(.22,.61,.3,1),width .45s cubic-bezier(.22,.61,.3,1)}
 
 /* Four Apple cards standing on a drum. Each card is rigid: nothing inside it is
    transformed, so type and images stay crisp. Only the drum turns. */
-.stage{flex:1;min-height:0;position:relative;perspective:1900px;perspective-origin:50% 50%}
+.stage{flex:1;min-height:0;height:100dvh;position:relative;perspective:1900px;perspective-origin:50% 50%}
 .drum{position:absolute;inset:0;transform-style:preserve-3d;
   transition:transform .75s cubic-bezier(.22,.61,.3,1)}
 .card{position:absolute;top:50%;left:50%;width:min(1020px,80vw);height:132vh;
@@ -72,14 +93,16 @@ table.dtable{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",ui-
 .dtable tr.pick td{font-weight:600}
 
 @media(max-width:760px){
-  nav.bar{justify-content:flex-start;gap:1.2rem;padding:0 1rem;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
-  nav.bar::-webkit-scrollbar{display:none}
+  nav.top button{display:none}
+  nav.pickbar{max-width:calc(100vw - 20px);overflow-x:auto;scrollbar-width:none}
+  nav.pickbar::-webkit-scrollbar{display:none}
+  nav.pickbar button{padding:.42rem .62rem}
   .card{width:92vw;height:132vh}
   }
 @media (prefers-reduced-motion:reduce){.drum{transition:none}}
 </style></head>
 <body>
-<nav class="bar"><span class="me">Carson Chiumento</span><button type="button">Dynamometer</button><button type="button">Docking Robotics</button><button type="button">In-Hub Design</button><button type="button">Personal Project</button></nav>
+<nav class="bar top"><span class="me">Carson Chiumento</span><button type="button">Dynamometer</button><button type="button">Docking Robotics</button><button type="button">In-Hub Design</button><button type="button">Personal Project</button></nav>
 <div class="stage" id="stage"><div class="drum" id="drum"><article class="card" data-i="0">
   <div class="inner">
     <header class="top"><h2>Dynamometer</h2><p class="tag">Two motors. One transducer.</p></header>
@@ -155,11 +178,13 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     
     
   </div>
-</article></div><button class="edge prev" type="button" aria-label="Previous project"></button><button class="edge next" type="button" aria-label="Next project"></button></div>
+</article></div><button class="edge prev" type="button" aria-label="Previous project"></button><button class="edge next" type="button" aria-label="Next project"></button></div><nav class="bar pickbar" aria-label="Projects"><span class="pick" aria-hidden="true"></span><button type="button">Dynamometer</button><button type="button">Docking Robotics</button><button type="button">In-Hub Design</button><button type="button">Personal Project</button></nav>
 <script>
 const drum=document.getElementById('drum'),cards=[...drum.querySelectorAll('.card')];
 const prev=document.querySelector('.edge.prev'),next=document.querySelector('.edge.next');
-const tabs=[...document.querySelectorAll('nav.bar button')];
+const tabs=[...document.querySelectorAll('nav.top button')];
+const picks=[...document.querySelectorAll('nav.pickbar button')];
+const pick=document.querySelector('nav.pickbar .pick');
 const STEP=42;                      // degrees between neighbouring cards on the drum
 let i=0,R=0;
 
@@ -169,15 +194,26 @@ function layout(){
   // and a card sitting on the lens. Wait for a real measurement instead.
   if(!w||!h){requestAnimationFrame(layout);return;}
   const over=Math.max(0,(h-document.getElementById('stage').clientHeight)/2);
+  // Both bars float over the card, so the first and last things on it have to clear
+  // them or they sit under glass and cannot be read.
+  const topBar=document.querySelector('nav.top'),botBar=document.querySelector('nav.pickbar');
+  const clearT=topBar.offsetHeight+22, clearB=botBar.offsetHeight+26;
   cards.forEach(c=>{const inn=c.querySelector('.inner');
-    inn.style.paddingTop=`calc(${over}px + clamp(1.8rem,4vw,3.2rem))`;
-    inn.style.paddingBottom=`calc(${over}px + clamp(1.8rem,4vw,3.2rem))`;});
+    inn.style.paddingTop=`calc(${over+clearT}px + clamp(1.8rem,4vw,3.2rem))`;
+    inn.style.paddingBottom=`calc(${over+clearB}px + clamp(1.8rem,4vw,3.2rem))`;});
   R=(w/2)/Math.tan(STEP*Math.PI/360)+40;
   cards.forEach((c,n)=>{
     c.style.marginLeft=(-w/2)+'px'; c.style.marginTop=(-h/2)+'px';
     c.style.transform=`rotateY(${n*STEP}deg) translateZ(${R}px)`;
   });
   turn();
+}
+// The lozenge is placed from the live button box, so it stays right whatever the
+// text measures at once the webfont lands.
+function movePick(){
+  const b=picks[i]; if(!b||!pick||!b.offsetWidth)return;
+  pick.style.width=b.offsetWidth+'px';
+  pick.style.translate=b.offsetLeft+'px 0';
 }
 function turn(){
   drum.style.transform=`translateZ(${-R}px) rotateY(${-i*STEP}deg)`;
@@ -189,10 +225,13 @@ function turn(){
     if(n!==i) c.querySelector('.inner').scrollTop=0;
   });
   tabs.forEach((t,n)=>t.classList.toggle('on',n===i));
+  picks.forEach((t,n)=>t.classList.toggle('on',n===i));
+  movePick();
   if(prev){prev.disabled=i===0;next.disabled=i===cards.length-1;}
 }
 const go=n=>{i=Math.max(0,Math.min(cards.length-1,n));cards[i].querySelector('.inner').scrollTop=0;turn();};
 tabs.forEach((t,n)=>t.onclick=()=>go(n));
+picks.forEach((t,n)=>t.onclick=()=>go(n));
 prev.onclick=()=>go(i-1); next.onclick=()=>go(i+1);
 cards.forEach((c,n)=>c.addEventListener('click',e=>{if(n!==i){e.preventDefault();go(n);}}));
 addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(i+1);if(e.key==='ArrowLeft')go(i-1);});
@@ -227,5 +266,6 @@ addEventListener('touchend',e=>{
 layout();
 Promise.all([...document.images].filter(m=>!m.complete).map(m=>new Promise(r=>{m.onload=m.onerror=r})))
  .then(()=>{layout();cards[i].querySelector('.inner').scrollTop=0;});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(movePick);
 </script>
 </body></html>
