@@ -19,10 +19,10 @@ body{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;background:va
 img{max-width:100%;display:block}
 a{color:var(--blue);text-decoration:none}
 
-nav.bar{flex:none;height:48px;display:flex;align-items:center;justify-content:center;gap:2.2rem;
+nav.bar{flex:none;height:42px;display:flex;align-items:center;justify-content:center;gap:2.2rem;
   background:rgba(251,251,253,.94);border-bottom:1px solid rgba(0,0,0,.07);z-index:10}
 nav.bar .me{font-size:14px;font-weight:600}
-nav.bar button{font:inherit;font-size:12px;background:none;border:0;color:var(--ink);opacity:.5;cursor:pointer;padding:4px 2px}
+nav.bar button{font:inherit;font-size:12px;background:none;border:0;color:var(--ink);opacity:.5;cursor:pointer;padding:3px 2px}
 nav.bar button:hover{opacity:.9}
 nav.bar button.on{opacity:1;font-weight:500}
 
@@ -36,6 +36,14 @@ nav.bar button.on{opacity:1;font-weight:500}
   box-shadow:0 2px 6px rgba(0,0,0,.07),0 30px 70px -30px rgba(0,0,0,.45);
   transition:opacity .5s ease;backface-visibility:hidden}
 .card:not(.on){cursor:pointer}
+/* The side gutters, where the turned cards show. A card rotated away sits behind
+   the stage's own plane, so the stage wins the 3D hit test and the sliver cannot be
+   clicked. These targets are flat and untransformed, so they always take the click. */
+.edge{position:absolute;top:0;bottom:0;z-index:5;border:0;background:none;padding:0;
+  width:calc((100% - min(1020px,80vw))/2);cursor:pointer}
+.edge.prev{left:0}
+.edge.next{right:0}
+.edge[disabled]{pointer-events:none}
 .inner{height:100%;overflow-y:auto;overscroll-behavior:contain;overflow-anchor:none;
   padding:clamp(1.8rem,4vw,3.2rem)}
 .card:not(.on) .inner{overflow:hidden}
@@ -147,9 +155,10 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     
     
   </div>
-</article></div></div>
+</article></div><button class="edge prev" type="button" aria-label="Previous project"></button><button class="edge next" type="button" aria-label="Next project"></button></div>
 <script>
 const drum=document.getElementById('drum'),cards=[...drum.querySelectorAll('.card')];
+const prev=document.querySelector('.edge.prev'),next=document.querySelector('.edge.next');
 const tabs=[...document.querySelectorAll('nav.bar button')];
 const STEP=42;                      // degrees between neighbouring cards on the drum
 let i=0,R=0;
@@ -180,9 +189,11 @@ function turn(){
     if(n!==i) c.querySelector('.inner').scrollTop=0;
   });
   tabs.forEach((t,n)=>t.classList.toggle('on',n===i));
+  if(prev){prev.disabled=i===0;next.disabled=i===cards.length-1;}
 }
 const go=n=>{i=Math.max(0,Math.min(cards.length-1,n));cards[i].querySelector('.inner').scrollTop=0;turn();};
 tabs.forEach((t,n)=>t.onclick=()=>go(n));
+prev.onclick=()=>go(i-1); next.onclick=()=>go(i+1);
 cards.forEach((c,n)=>c.addEventListener('click',e=>{if(n!==i){e.preventDefault();go(n);}}));
 addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(i+1);if(e.key==='ArrowLeft')go(i-1);});
 addEventListener('resize',layout);
