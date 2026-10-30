@@ -77,7 +77,7 @@ nav.pickbar .pick{position:absolute;top:.34rem;bottom:.34rem;left:0;width:0;bord
 .blocks > .block + .block{border-top:1px solid var(--line);
   padding-top:clamp(2rem,4vw,3.2rem)}
 .slab{border-radius:16px;background:var(--grey);padding:clamp(.9rem,2vw,1.4rem);overflow:hidden}
-pre.code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.7rem;line-height:1.7;white-space:pre;overflow-x:auto}
+pre.code{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.7rem;line-height:1.7;white-space:pre;overflow-x:auto;overflow-y:hidden;overscroll-behavior:contain}
 .code .cm{opacity:.55}
 .dnote{font-size:.82rem;color:var(--mut);margin:.8rem 0 .5rem}
 .dwrap{overflow-x:auto}
@@ -246,6 +246,22 @@ addEventListener('wheel',e=>{
   armed=false; swipe=0;
   go(i+(e.deltaX>0?1:-1));
 },{passive:true});
+// The cards sit in a 3D scene, so the element under the pointer is whatever plane the
+// browser picks: sometimes the card, sometimes the stage or the drum behind it, and
+// over a code block it is an element that was made a scroll container by its own
+// horizontal overflow and has nowhere to go. Any of those swallow the gesture and the
+// card sits still. So rather than depend on what is under the pointer, send vertical
+// movement to the card that is facing us.
+document.getElementById('stage').addEventListener('wheel',e=>{
+  if(Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;      // sideways: the turn guard has it
+  const inn=cards[i].querySelector('.inner');
+  const max=inn.scrollHeight-inn.clientHeight;
+  if(max<=0)return;
+  const step=e.deltaMode===1?e.deltaY*16:e.deltaMode===2?e.deltaY*inn.clientHeight:e.deltaY;
+  const to=Math.max(0,Math.min(max,inn.scrollTop+step));
+  if(to!==inn.scrollTop){e.preventDefault();inn.scrollTop=to;}
+},{passive:false});
+
 let x0=null,y0=null;
 addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY;},{passive:true});
 addEventListener('touchend',e=>{
