@@ -28,11 +28,10 @@ nav.bar{position:fixed;left:50%;translate:-50% 0;z-index:20;display:flex;align-i
   border:1px solid rgba(255,255,255,.6);
   box-shadow:0 1px 1px rgba(0,0,0,.04),0 10px 30px -10px rgba(0,0,0,.28),
              inset 0 1px 0 rgba(255,255,255,.75)}
-nav.top{top:14px;padding:.46rem 1.15rem}
-nav.top .me{font-size:13px;font-weight:600;letter-spacing:-.01em}
 
 /* The selector. A single lozenge slides to whichever name is current. */
 nav.pickbar{bottom:18px;padding:.34rem;gap:.1rem}
+nav.pickbar .me{font-size:15px;font-weight:600;letter-spacing:-.015em;padding:0 1rem;white-space:nowrap}
 nav.pickbar button{position:relative;z-index:1;font:inherit;font-size:12px;background:none;border:0;
   color:var(--ink);opacity:.55;cursor:pointer;padding:.42rem .9rem;border-radius:999px;
   white-space:nowrap;transition:opacity .3s ease}
@@ -92,12 +91,12 @@ table.dtable{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",ui-
   nav.pickbar{max-width:calc(100vw - 20px);overflow-x:auto;scrollbar-width:none}
   nav.pickbar::-webkit-scrollbar{display:none}
   nav.pickbar button{padding:.42rem .62rem}
+  nav.pickbar .me{font-size:14px;padding:0 .6rem}
   .card{width:92vw;height:132vh}
   }
 @media (prefers-reduced-motion:reduce){.drum{transition:none}}
 </style></head>
 <body>
-<nav class="bar top"><span class="me">Carson Chiumento</span></nav>
 <div class="stage" id="stage"><div class="drum" id="drum"><article class="card" data-i="0">
   <div class="inner">
     <header class="top"><h2>Dynamometer</h2><p class="tag">Two motors. One transducer.</p></header>
@@ -173,7 +172,7 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
     
     
   </div>
-</article></div><button class="edge prev" type="button" aria-label="Previous project"></button><button class="edge next" type="button" aria-label="Next project"></button></div><nav class="bar pickbar" aria-label="Projects"><span class="pick" aria-hidden="true"></span><button type="button">Dynamometer</button><button type="button">Docking Robotics</button><button type="button">In-Hub Design</button><button type="button">Personal Project</button></nav>
+</article></div><button class="edge prev" type="button" aria-label="Previous project"></button><button class="edge next" type="button" aria-label="Next project"></button></div><nav class="bar pickbar" aria-label="Projects"><span class="pick" aria-hidden="true"></span><button type="button">Dynamometer</button><button type="button">Docking Robotics</button><span class="me">Carson Chiumento</span><button type="button">In-Hub Design</button><button type="button">Personal Project</button></nav>
 <script>
 const drum=document.getElementById('drum'),cards=[...drum.querySelectorAll('.card')];
 const prev=document.querySelector('.edge.prev'),next=document.querySelector('.edge.next');
@@ -188,12 +187,11 @@ function layout(){
   // and a card sitting on the lens. Wait for a real measurement instead.
   if(!w||!h){requestAnimationFrame(layout);return;}
   const over=Math.max(0,(h-document.getElementById('stage').clientHeight)/2);
-  // Both bars float over the card, so the first and last things on it have to clear
-  // them or they sit under glass and cannot be read.
-  const topBar=document.querySelector('nav.top'),botBar=document.querySelector('nav.pickbar');
-  const clearT=topBar.offsetHeight+22, clearB=botBar.offsetHeight+26;
+  // The bar floats over the foot of the card, so whatever ends up down there has to
+  // clear it or it sits under glass and cannot be read.
+  const clearB=document.querySelector('nav.pickbar').offsetHeight+26;
   cards.forEach(c=>{const inn=c.querySelector('.inner');
-    inn.style.paddingTop=`calc(${over+clearT}px + clamp(1.8rem,4vw,3.2rem))`;
+    inn.style.paddingTop=`calc(${over}px + clamp(1.8rem,4vw,3.2rem))`;
     inn.style.paddingBottom=`calc(${over+clearB}px + clamp(1.8rem,4vw,3.2rem))`;});
   R=(w/2)/Math.tan(STEP*Math.PI/360)+40;
   cards.forEach((c,n)=>{
