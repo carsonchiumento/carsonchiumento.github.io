@@ -28,12 +28,8 @@ nav.bar{position:fixed;left:50%;translate:-50% 0;z-index:20;display:flex;align-i
   border:1px solid rgba(255,255,255,.6);
   box-shadow:0 1px 1px rgba(0,0,0,.04),0 10px 30px -10px rgba(0,0,0,.28),
              inset 0 1px 0 rgba(255,255,255,.75)}
-nav.top{top:14px;gap:1.9rem;padding:.46rem 1.25rem}
+nav.top{top:14px;padding:.46rem 1.15rem}
 nav.top .me{font-size:13px;font-weight:600;letter-spacing:-.01em}
-nav.top button{font:inherit;font-size:12px;background:none;border:0;color:var(--ink);
-  opacity:.5;cursor:pointer;padding:3px 2px}
-nav.top button:hover{opacity:.85}
-nav.top button.on{opacity:1;font-weight:500}
 
 /* The selector. A single lozenge slides to whichever name is current. */
 nav.pickbar{bottom:18px;padding:.34rem;gap:.1rem}
@@ -93,7 +89,6 @@ table.dtable{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",ui-
 .dtable tr.pick td{font-weight:600}
 
 @media(max-width:760px){
-  nav.top button{display:none}
   nav.pickbar{max-width:calc(100vw - 20px);overflow-x:auto;scrollbar-width:none}
   nav.pickbar::-webkit-scrollbar{display:none}
   nav.pickbar button{padding:.42rem .62rem}
@@ -102,7 +97,7 @@ table.dtable{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono",ui-
 @media (prefers-reduced-motion:reduce){.drum{transition:none}}
 </style></head>
 <body>
-<nav class="bar top"><span class="me">Carson Chiumento</span><button type="button">Dynamometer</button><button type="button">Docking Robotics</button><button type="button">In-Hub Design</button><button type="button">Personal Project</button></nav>
+<nav class="bar top"><span class="me">Carson Chiumento</span></nav>
 <div class="stage" id="stage"><div class="drum" id="drum"><article class="card" data-i="0">
   <div class="inner">
     <header class="top"><h2>Dynamometer</h2><p class="tag">Two motors. One transducer.</p></header>
@@ -182,7 +177,6 @@ fn = (1 / (2*pi)) * sqrt(k_sys / j_sys);</pre>
 <script>
 const drum=document.getElementById('drum'),cards=[...drum.querySelectorAll('.card')];
 const prev=document.querySelector('.edge.prev'),next=document.querySelector('.edge.next');
-const tabs=[...document.querySelectorAll('nav.top button')];
 const picks=[...document.querySelectorAll('nav.pickbar button')];
 const pick=document.querySelector('nav.pickbar .pick');
 const STEP=42;                      // degrees between neighbouring cards on the drum
@@ -224,13 +218,11 @@ function turn(){
     c.style.pointerEvents=d>1?'none':'auto';
     if(n!==i) c.querySelector('.inner').scrollTop=0;
   });
-  tabs.forEach((t,n)=>t.classList.toggle('on',n===i));
   picks.forEach((t,n)=>t.classList.toggle('on',n===i));
   movePick();
   if(prev){prev.disabled=i===0;next.disabled=i===cards.length-1;}
 }
 const go=n=>{i=Math.max(0,Math.min(cards.length-1,n));cards[i].querySelector('.inner').scrollTop=0;turn();};
-tabs.forEach((t,n)=>t.onclick=()=>go(n));
 picks.forEach((t,n)=>t.onclick=()=>go(n));
 prev.onclick=()=>go(i-1); next.onclick=()=>go(i+1);
 cards.forEach((c,n)=>c.addEventListener('click',e=>{if(n!==i){e.preventDefault();go(n);}}));
