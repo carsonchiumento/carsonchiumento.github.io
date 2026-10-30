@@ -64,8 +64,10 @@ nav.pickbar .pick{position:absolute;top:.34rem;bottom:.34rem;left:0;width:0;bord
   padding:clamp(1.8rem,4vw,3.2rem)}
 .card:not(.on) .inner{overflow:hidden}
 
-.top{text-align:center;max-width:42rem;margin:0 auto}
+.top{text-align:center;margin:0 auto;
+  padding-bottom:clamp(1.4rem,3vw,2.2rem);border-bottom:1px solid var(--line)}
 .top h2{font-size:clamp(1.9rem,3.6vw,2.9rem);font-weight:600;letter-spacing:-.03em;line-height:1.08}
+/* the same gap above and below the rule, so it sits squarely between the two */
 .shot{margin-top:clamp(1.4rem,3vw,2.2rem)}
 .shot img{width:100%;border-radius:16px}
 .cap{margin:.85rem auto 0;text-align:center;font-size:.86rem;color:var(--mut);line-height:1.5;max-width:44ch}
